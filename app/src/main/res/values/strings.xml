@@ -4,4 +4,5 @@
     <string name="title_activity_suggestion">SuggestionActivity</string>
     <string name="title_activity_search_want_music">SearchWantMusicActivity</string>
     <string name="title_activity_search_sang_music">SearchSangMusicActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
