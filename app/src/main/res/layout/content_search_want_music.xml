@@ -19,7 +19,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/artistEditText"
+            android:id="@+id/artistWantEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="アーティスト名"
@@ -28,7 +28,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/searchArtistButton"
+        android:id="@+id/searchArtistWantButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/musicEditText"
+            android:id="@+id/musicWantEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="曲名"
@@ -55,7 +55,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/searchMusicButton"
+        android:id="@+id/searchMusicWantButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

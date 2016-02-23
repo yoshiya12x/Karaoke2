@@ -28,7 +28,8 @@ public class SearchWantMusicActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        artistSearchButton = (Button) findViewById(R.id.searchArtistButton);
+        artistEditText = (EditText) findViewById(R.id.artistWantEditText);
+        artistSearchButton = (Button) findViewById(R.id.searchArtistWantButton);
         artistSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,8 +38,25 @@ public class SearchWantMusicActivity extends AppCompatActivity {
                 //artist=0,music=1
                 intent.putExtra("typeFlag", 0);
                 //want=0,sang=1
-                intent.putExtra("viewFlag",0);
+                intent.putExtra("viewFlag", 0);
                 intent.putExtra("artistName", sb.toString());
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        musicEditText = (EditText) findViewById(R.id.musicWantEditText);
+        musicSearchButton = (Button) findViewById(R.id.searchMusicWantButton);
+        musicSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SpannableStringBuilder sb = (SpannableStringBuilder) musicEditText.getText();
+                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+                //artist=0,music=1
+                intent.putExtra("typeFlag", 1);
+                //want=0,sang=1
+                intent.putExtra("viewFlag", 0);
+                intent.putExtra("artistName", sb.toString());
+                view.getContext().startActivity(intent);
             }
         });
     }
