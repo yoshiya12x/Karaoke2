@@ -21,6 +21,14 @@
         <activity
             android:name=".SuggestionActivity"
             android:label="@string/title_activity_suggestion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SearchWantMusicActivity"
+            android:label="@string/title_activity_search_want_music"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SearchSangMusicActivity"
+            android:label="@string/title_activity_search_sang_music"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

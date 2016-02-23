@@ -6,39 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
-import java.util.ArrayList;
-
-public class SuggestionActivity extends AppCompatActivity {
+public class SearchSangMusicActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestion);
+        setContentView(R.layout.activity_search_sang_music);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("ルーム名");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ListView dayListView = (ListView) findViewById(R.id.suggetionMusicListView);
-        SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(SuggestionActivity.this, getMusicList());
-        dayListView.setAdapter(suggestionMusicListAdapter);
-    }
-
-    public ArrayList<String> getMusicList() {
-        ArrayList<String> musicList = new ArrayList<>();
-        //DBから取得
-        //これはテスト
-        for (int i = 0; i < 200; i++) {
-            musicList.add(i + "番目の曲");
-        }
-        return musicList;
     }
 
     @Override
@@ -66,6 +44,4 @@ public class SuggestionActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
 }
