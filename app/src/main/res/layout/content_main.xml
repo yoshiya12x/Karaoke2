@@ -45,4 +45,14 @@
         android:paddingRight="@dimen/search_button_margin"
         android:text="ルーム入室" />
 
+    <!--view表示時にeditTextからフォーカスを外すため-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus />
+    </TextView>
+
 </LinearLayout>

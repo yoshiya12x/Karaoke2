@@ -1,10 +1,12 @@
 package com.example.xjapan.karaoke2;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,9 +40,16 @@ public class RegisterMusicListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.search_music_list_item, viewGroup, false);
         TextView musicNameTextView = (TextView) view.findViewById(R.id.sear_music_name);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.registerMusicLinearLayout);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("register_test", musicList.get(i));
+            }
+        });
         musicNameTextView.setText(musicList.get(i));
         return view;
     }

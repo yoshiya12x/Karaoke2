@@ -20,17 +20,18 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("登録");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         Intent intent = getIntent();
         typeFlag = intent.getIntExtra("typeFlag", 2); //0:artist 1:music 2:error
         viewFlag = intent.getIntExtra("viewFlag", 2); //0:want 1:sang 2:error
         postName = intent.getStringExtra("postName");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("検索結果(" + postName + ")");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         ListView dayListView = (ListView) findViewById(R.id.registerMusicListView);
         RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(RegisterActivity.this, getMusicList());
@@ -42,13 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onResume();
     }
 
-
     public ArrayList<String> getMusicList() {
         ArrayList<String> musicList = new ArrayList<>();
-
-        
-
-
         for (int i = 0; i < 200; i++) {
             musicList.add(i + "番目の曲");
         }
@@ -67,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
             this.startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
             finish();

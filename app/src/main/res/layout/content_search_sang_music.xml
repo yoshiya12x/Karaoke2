@@ -65,4 +65,14 @@
         android:paddingRight="@dimen/search_button_margin"
         android:text="検索" />
 
+    <!--view表示時にeditTextからフォーカスを外すため-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus />
+    </TextView>
+
 </LinearLayout>

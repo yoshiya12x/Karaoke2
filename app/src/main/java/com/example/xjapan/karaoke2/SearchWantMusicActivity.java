@@ -71,6 +71,8 @@ public class SearchWantMusicActivity extends AppCompatActivity {
             this.startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
             finish();
