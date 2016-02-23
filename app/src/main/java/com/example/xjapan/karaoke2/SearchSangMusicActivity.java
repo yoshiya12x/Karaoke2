@@ -39,7 +39,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
                 intent.putExtra("typeFlag", 0);
                 //want=0,sang=1
                 intent.putExtra("viewFlag", 1);
-                intent.putExtra("artistName", sb.toString());
+                intent.putExtra("postName", sb.toString());
                 view.getContext().startActivity(intent);
             }
         });
@@ -54,8 +54,8 @@ public class SearchSangMusicActivity extends AppCompatActivity {
                 //artist=0,music=1
                 intent.putExtra("typeFlag", 1);
                 //want=0,sang=1
-                intent.putExtra("viewFlag", 0);
-                intent.putExtra("artistName", sb.toString());
+                intent.putExtra("viewFlag", 1);
+                intent.putExtra("postName", sb.toString());
                 view.getContext().startActivity(intent);
             }
         });

@@ -13,8 +13,6 @@ import android.widget.EditText;
 
 public class SearchWantMusicActivity extends AppCompatActivity {
 
-    private Button artistSearchButton;
-    private Button musicSearchButton;
     private EditText artistEditText;
     private EditText musicEditText;
 
@@ -29,7 +27,7 @@ public class SearchWantMusicActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         artistEditText = (EditText) findViewById(R.id.artistWantEditText);
-        artistSearchButton = (Button) findViewById(R.id.searchArtistWantButton);
+        Button artistSearchButton = (Button) findViewById(R.id.searchArtistWantButton);
         artistSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,13 +37,13 @@ public class SearchWantMusicActivity extends AppCompatActivity {
                 intent.putExtra("typeFlag", 0);
                 //want=0,sang=1
                 intent.putExtra("viewFlag", 0);
-                intent.putExtra("artistName", sb.toString());
+                intent.putExtra("postName", sb.toString());
                 view.getContext().startActivity(intent);
             }
         });
 
         musicEditText = (EditText) findViewById(R.id.musicWantEditText);
-        musicSearchButton = (Button) findViewById(R.id.searchMusicWantButton);
+        Button musicSearchButton = (Button) findViewById(R.id.searchMusicWantButton);
         musicSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +53,7 @@ public class SearchWantMusicActivity extends AppCompatActivity {
                 intent.putExtra("typeFlag", 1);
                 //want=0,sang=1
                 intent.putExtra("viewFlag", 0);
-                intent.putExtra("artistName", sb.toString());
+                intent.putExtra("postName", sb.toString());
                 view.getContext().startActivity(intent);
             }
         });

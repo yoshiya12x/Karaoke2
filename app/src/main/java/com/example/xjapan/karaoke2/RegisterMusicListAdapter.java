@@ -12,14 +12,14 @@ import java.util.ArrayList;
 /**
  * Created by xjapan on 16/02/23.
  */
-public class SuggestionMusicListAdapter extends BaseAdapter {
+public class RegisterMusicListAdapter extends BaseAdapter {
 
-    private ArrayList<String> musicList;
     private LayoutInflater inflater;
+    private ArrayList<String> musicList;
 
-    public SuggestionMusicListAdapter(Context context, ArrayList<String> musicList) {
-        this.musicList = musicList;
+    public RegisterMusicListAdapter(Context context, ArrayList<String> musicList) {
         this.inflater = LayoutInflater.from(context);
+        this.musicList = musicList;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class SuggestionMusicListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.suggestion_music_list_item, viewGroup, false);
-        TextView musicNameTextView = (TextView) view.findViewById(R.id.music_name);
+        view = inflater.inflate(R.layout.search_music_list_item, viewGroup, false);
+        TextView musicNameTextView = (TextView) view.findViewById(R.id.sear_music_name);
         musicNameTextView.setText(musicList.get(i));
         return view;
     }

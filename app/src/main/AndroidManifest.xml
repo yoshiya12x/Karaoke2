@@ -33,6 +33,10 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InitialUseActivity"
+            android:label="@string/title_activity_initial_use"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
