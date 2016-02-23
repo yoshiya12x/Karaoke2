@@ -22,6 +22,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String selectMusicName = null;
 
+    Common common;
+
     private Button registerButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        common = (Common) getApplication();
 
         Intent intent = getIntent();
         typeFlag = intent.getIntExtra("typeFlag", 2); //0:artist 1:music 2:error
@@ -50,19 +54,24 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    registerButton.setText(selectMusicName);
+
+                    registerButton.setText(common.musicName); //確認用
 //                Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
 //                view.getContext().startActivity(intent);
             }
         });
     }
 
+//    public void setSelectMusicName(String name){
+//        selectMusicName = name;
+//    }
+
     @Override
     public void onResume() {
         super.onResume();
         ListView dayListView = (ListView) findViewById(R.id.registerMusicListView);
-        SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(RegisterActivity.this, getMusicList());
-        dayListView.setAdapter(suggestionMusicListAdapter);
+        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(RegisterActivity.this, getMusicList(),common);
+        dayListView.setAdapter(registerMusicListAdapter);
     }
 
     public ArrayList<String> getMusicList() {
