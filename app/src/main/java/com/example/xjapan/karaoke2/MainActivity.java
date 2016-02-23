@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
         sb = (SpannableStringBuilder) roomNameEditText.getText();
-        Button testButton = (Button) findViewById(R.id.roomInButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        Button roomInButton = (Button) findViewById(R.id.roomInButton);
+        roomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (sb.toString().equals("")) {
@@ -46,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button roomCreateButton = (Button) findViewById(R.id.roomCreateButton);
+        roomCreateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sb.toString().equals("")) {
+
+                } else {
+                    Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
+                    intent.putExtra("roomName", sb.toString());
+                    view.getContext().startActivity(intent);
+                }
+
+            }
+        });
+
     }
 
 }

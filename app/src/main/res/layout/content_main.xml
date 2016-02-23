@@ -32,18 +32,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="ルーム作成" />
+        android:text="ルーム作成"
+        android:textColor="@color/colorWhite" />
 
     <Button
         android:id="@+id/roomInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="ルーム入室" />
+        android:text="ルーム入室"
+        android:textColor="@color/colorWhite" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->
     <TextView

@@ -34,8 +34,20 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textInputLayout"
         android:layout_centerInParent="true"
+        android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="登録" />
+        android:text="登録"
+        android:textColor="@color/colorWhite" />
+
+    <!--view表示時にeditTextからフォーカスを外すため-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus />
+    </TextView>
 
 </LinearLayout>

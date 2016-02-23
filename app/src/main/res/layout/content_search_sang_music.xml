@@ -34,11 +34,13 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textInputLayout"
         android:layout_centerInParent="true"
+        android:background="@drawable/button"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="検索" />
+        android:text="検索"
+        android:textColor="@color/colorWhite" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -61,9 +63,11 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textInputLayout"
         android:layout_centerInParent="true"
+        android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="検索" />
+        android:text="検索"
+        android:textColor="@color/colorWhite" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->
     <TextView

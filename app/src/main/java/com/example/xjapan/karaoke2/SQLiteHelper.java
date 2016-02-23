@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     static final String DatabaseName = "KaraokeDB";
-    static final int DatabaseVersion = 7;
+    static final int DatabaseVersion = 9;
 
     public SQLiteHelper(Context mContext) {
         super(mContext, DatabaseName, null, DatabaseVersion);
@@ -22,7 +22,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //登録していない=0,登録している=1
+        //registerFlag(登録していない=0,登録している=1)
         db.execSQL("create table `user` ( `userId` integer primary key, `registerFlag` varchar(255), `userName` varchar(255));");
     }
 

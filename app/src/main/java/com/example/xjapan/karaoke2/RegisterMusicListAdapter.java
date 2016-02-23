@@ -1,7 +1,6 @@
 package com.example.xjapan.karaoke2;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,7 @@ public class RegisterMusicListAdapter extends BaseAdapter {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("register_test", musicList.get(i));
+
             }
         });
         musicNameTextView.setText(musicList.get(i));
