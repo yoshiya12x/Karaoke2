@@ -15,11 +15,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String postName = "";
     private String type = "";
     private String view = "";
+    private ArrayList<String> musicList;
+    private ListView registerMusicListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,35 +48,34 @@ public class RegisterActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(typeFlag == 0){
+        if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
-        }
-        else if(typeFlag == 1 ){
+        } else if (typeFlag == 1) {
             toolbar.setTitle("曲名(" + postName + ")");
-        }
-        else {
+        } else {
             toolbar.setTitle("error(" + postName + ")");
         }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        ListView dayListView = (ListView) findViewById(R.id.registerMusicListView);
-        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(RegisterActivity.this, getMusicList());
-        dayListView.setAdapter(registerMusicListAdapter);
-    }
+        registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
+        musicList = new ArrayList<>();
+        AppClient.getService().getSearchMusicTitleByMusicName("b", 10, 0, new Callback<List<MusicTitle>>() {
+            @Override
+            public void success(List<MusicTitle> musicTitleList, Response response) {
+                for (int i = 0; i < musicTitleList.size(); i++) {
+                    musicList.add(musicTitleList.get(i).music_name + "(" + musicTitleList.get(i).artist_name + ")");
+                }
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicList);
+                registerMusicListView.setAdapter(suggestionMusicListAdapter);
+            }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public ArrayList<String> getMusicList() {
-        ArrayList<String> musicList = new ArrayList<>();
-        for (int i = 0; i < 200; i++) {
-            musicList.add(i + "番目の曲 / artist artist artist artist artist artist ");
-        }
-        return musicList;
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
     }
 
     @Override
@@ -93,10 +99,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return false;
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
 }

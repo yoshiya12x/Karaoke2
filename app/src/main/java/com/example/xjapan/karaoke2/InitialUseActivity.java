@@ -17,9 +17,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class InitialUseActivity extends AppCompatActivity {
 
@@ -40,16 +45,24 @@ public class InitialUseActivity extends AppCompatActivity {
 
         userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 if (!sb.toString().equals("")) {
-                    UserDB userDB = new UserDB(view.getContext());
-                    userDB.insertAll(sb.toString());
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
-                    view.getContext().startActivity(intent);
-                }
+                    AppClient.getService().getUserInfo(sb.toString(), new Callback<UserInfo>() {
+                        @Override
+                        public void success(UserInfo userInfo, Response response) {
+                            UserDB userDB = new UserDB(getApplicationContext());
+                            userDB.insertAll(sb.toString());
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            getApplicationContext().startActivity(intent);
+                        }
 
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("musicRecommendList_test", error.toString());
+                        }
+                    });
+                }
             }
         });
     }

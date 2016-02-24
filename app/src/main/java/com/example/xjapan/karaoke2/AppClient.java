@@ -56,9 +56,19 @@ public class AppClient {
                 Callback<List<MusicRecommend>> callback
         );
 
-        @GET("")
-        void getTest(
-                @Query("test") int test,
-                Callback<List<MusicRecommend>> callback);
+        @GET("/searchMusicTitleRanged")
+        void getSearchMusicTitleByMusicName(
+                @Query("musicName") String musicName,
+                @Query("pageLength") int pageLength,
+                @Query("pageNumber") int pageNumber,
+                Callback<List<MusicTitle>> callback
+        );
+
+        @GET("/insertUserName")
+        void getUserInfo(
+                @Query("userName") String userName,
+                Callback<UserInfo> callback);
+
+
     }
 }
