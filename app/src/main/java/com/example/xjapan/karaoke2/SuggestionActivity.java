@@ -4,44 +4,53 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class SuggestionActivity extends AppCompatActivity {
+
+    private ArrayList<String> musicList;
+    private ListView musicListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggestion);
-
         Intent intent = getIntent();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
         setSupportActionBar(toolbar);
+        //nullチェックする
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ListView dayListView = (ListView) findViewById(R.id.suggetionMusicListView);
-        SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(SuggestionActivity.this, getMusicList());
-        dayListView.setAdapter(suggestionMusicListAdapter);
-    }
+        musicListView = (ListView) findViewById(R.id.suggetionMusicListView);
 
-    public ArrayList<String> getMusicList() {
-        ArrayList<String> musicList = new ArrayList<>();
-        //DBから取得
-        //これはテスト
-        for (int i = 0; i < 200; i++) {
-            musicList.add(i + "番目の曲");
-        }
-        return musicList;
+        musicList = new ArrayList<>();
+        AppClient.getService().getMusicRecommend(1, new Callback<List<MusicRecommend>>() {
+            @Override
+            public void success(List<MusicRecommend> musicRecommendList, Response response) {
+                for (int i = 0; i < musicRecommendList.size(); i++) {
+                    musicList.add(musicRecommendList.get(i).title + "(" + musicRecommendList.get(i).artist + ")");
+                }
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicList);
+                musicListView.setAdapter(suggestionMusicListAdapter);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
     }
 
     @Override
@@ -69,6 +78,5 @@ public class SuggestionActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
 }
