@@ -1,4 +1,4 @@
-Music Recommender (team_e: ohsaka)  
+Music Recommender (team_e: ohsaka)
 【フロントエンド】
 ====
 
