@@ -1,3 +1,11 @@
+/*
+* アプリ起動時（ユーザ登録後）の画面
+*
+*
+*
+*
+* */
+
 package com.example.xjapan.karaoke2;
 
 import android.content.Intent;
