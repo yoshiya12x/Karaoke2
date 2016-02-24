@@ -18,7 +18,7 @@ import retrofit.client.Response;
 
 public class SuggestionActivity extends AppCompatActivity {
 
-    private  ArrayList<String> musicList;
+    private ArrayList<String> musicList;
     private ListView musicListView;
 
     @Override
@@ -31,7 +31,6 @@ public class SuggestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
         setSupportActionBar(toolbar);
-        //nullチェック
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
