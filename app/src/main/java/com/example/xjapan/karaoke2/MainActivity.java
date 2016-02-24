@@ -37,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         UserDB userDB = new UserDB(this);
-        ArrayList<String> userInfo = userDB.selectAll();
+        final ArrayList<String> userInfo = userDB.selectAll();
         if (userInfo.size() == 0) {
-            Intent intent = new Intent(this, InitialUseActivity.class);
-            this.startActivity(intent);
+            Intent intentInitialUseActivity = new Intent(this, InitialUseActivity.class);
+            this.startActivity(intentInitialUseActivity);
         } else {
             // toolbar.setTitle(userInfo.get(2));
         }
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!sb.toString().equals("")) {
                     Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
                     intent.putExtra("roomName", sb.toString());
+                    intent.putExtra("account_id", userInfo.get(0));
                     view.getContext().startActivity(intent);
                 }
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!sb.toString().equals("")) {
                     Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
                     intent.putExtra("roomName", sb.toString());
+                    intent.putExtra("account_id", userInfo.get(0));
                     view.getContext().startActivity(intent);
                 }
 

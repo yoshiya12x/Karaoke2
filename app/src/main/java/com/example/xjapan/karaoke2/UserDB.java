@@ -19,7 +19,7 @@ public class UserDB {
     }
 
     public ArrayList<String> selectAll() {
-        String[] tableColumn = {"userId", "registerFlag", "userName"};
+        String[] tableColumn = {"userId", "account_id", "userName"};
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.query(tableName, tableColumn, null, null, null, null, null);
         boolean mov = cursor.moveToFirst();
@@ -34,10 +34,10 @@ public class UserDB {
         return query;
     }
 
-    public void insertAll(String userName) {
+    public void insertAll(int account_id, String userName) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
-        insertValues.put("registerFlag", "1");
+        insertValues.put("account_id", account_id + "");
         insertValues.put("userName", userName);
         long id = db.insert(tableName, "00", insertValues);
         db.close();

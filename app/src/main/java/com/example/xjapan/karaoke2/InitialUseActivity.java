@@ -12,6 +12,7 @@
 
 package com.example.xjapan.karaoke2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,11 +32,13 @@ public class InitialUseActivity extends AppCompatActivity {
     private EditText userNameEditText;
     private Button userRegisterButton;
     private SpannableStringBuilder sb;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_use);
+        this.context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("登録画面");
         setSupportActionBar(toolbar);
@@ -52,9 +55,9 @@ public class InitialUseActivity extends AppCompatActivity {
                         @Override
                         public void success(UserInfo userInfo, Response response) {
                             UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(sb.toString());
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            getApplicationContext().startActivity(intent);
+                            userDB.insertAll(userInfo.account_id, sb.toString());
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
                         }
 
                         @Override

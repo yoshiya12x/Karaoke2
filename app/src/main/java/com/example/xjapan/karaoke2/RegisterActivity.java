@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -28,12 +27,6 @@ import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private int typeFlag = 0;
-    private int viewFlag = 0;
-    private String postName = "";
-    private String type = "";
-    private String view = "";
-    private ArrayList<String> musicList;
     private ListView registerMusicListView;
 
     @Override
@@ -42,12 +35,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Intent intent = getIntent();
-        typeFlag = intent.getIntExtra("typeFlag", 2); //0:artist 1:music 2:error
-        viewFlag = intent.getIntExtra("viewFlag", 2); //0:want 1:sang 2:error
-        postName = intent.getStringExtra("postName"); //アーティスト名 or 曲名
+        int typeFlag = intent.getIntExtra("typeFlag", 2);
+        final int viewFlag = intent.getIntExtra("viewFlag", 2);
+        String postName = intent.getStringExtra("postName");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
         if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
         } else if (typeFlag == 1) {
@@ -59,23 +53,35 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
-        musicList = new ArrayList<>();
-        AppClient.getService().getSearchMusicTitleByMusicName("b", 10, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                for (int i = 0; i < musicTitleList.size(); i++) {
-                    musicList.add(musicTitleList.get(i).music_name + "(" + musicTitleList.get(i).artist_name + ")");
+        if (viewFlag == 0) {
+            AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+                @Override
+                public void success(List<MusicTitle> musicTitleList, Response response) {
+                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                    registerMusicListView.setAdapter(registerMusicListAdapter);
                 }
-                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicList);
-                registerMusicListView.setAdapter(suggestionMusicListAdapter);
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d("musicRecommendList_test", error.toString());
+                }
+            });
+
+        } else if (viewFlag == 1) {
+            AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+                @Override
+                public void success(List<MusicTitle> musicTitleList, Response response) {
+                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                    registerMusicListView.setAdapter(registerMusicListAdapter);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d("musicRecommendList_test", error.toString());
+                }
+            });
+        }
+
     }
 
     @Override

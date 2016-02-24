@@ -56,19 +56,31 @@ public class AppClient {
                 Callback<List<MusicRecommend>> callback
         );
 
-        @GET("/searchMusicTitleRanged")
+        @GET("/search_music_title_ranged")
         void getSearchMusicTitleByMusicName(
-                @Query("musicName") String musicName,
-                @Query("pageLength") int pageLength,
-                @Query("pageNumber") int pageNumber,
+                @Query("music_name") String music_name,
+                @Query("page_length") int page_length,
+                @Query("page_number") int page_number,
                 Callback<List<MusicTitle>> callback
         );
 
-        @GET("/insertUserName")
+        @GET("/search_music_artist_ranged")
+        void getSearchMusicTitleByArtistName(
+                @Query("artist_name") String artist_name,
+                @Query("page_length") int page_length,
+                @Query("page_number") int page_number,
+                Callback<List<MusicTitle>> callback
+        );
+
+        @GET("/account")
         void getUserInfo(
-                @Query("userName") String userName,
+                @Query("name") String name,
                 Callback<UserInfo> callback);
 
-
+        @GET("/sung_music")
+        void register_sung_music(
+                @Query("account_id") int account_id,
+                @Query("music_id") int music_id,
+                Callback<UserInfo> callback);
     }
 }

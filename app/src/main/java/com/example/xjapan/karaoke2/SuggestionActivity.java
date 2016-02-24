@@ -27,6 +27,7 @@ public class SuggestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestion);
 
         Intent intent = getIntent();
+        int accountId = intent.getIntExtra("account_id", 2); //0:artist 1:music 2:error
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
@@ -35,13 +36,10 @@ public class SuggestionActivity extends AppCompatActivity {
         musicListView = (ListView) findViewById(R.id.suggetionMusicListView);
 
         musicList = new ArrayList<>();
-        AppClient.getService().getMusicRecommend(1, new Callback<List<MusicRecommend>>() {
+        AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
             @Override
             public void success(List<MusicRecommend> musicRecommendList, Response response) {
-                for (int i = 0; i < musicRecommendList.size(); i++) {
-                    musicList.add(musicRecommendList.get(i).title + "(" + musicRecommendList.get(i).artist + ")");
-                }
-                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicList);
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicRecommendList);
                 musicListView.setAdapter(suggestionMusicListAdapter);
             }
 
@@ -64,6 +62,8 @@ public class SuggestionActivity extends AppCompatActivity {
             this.startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
             finish();
