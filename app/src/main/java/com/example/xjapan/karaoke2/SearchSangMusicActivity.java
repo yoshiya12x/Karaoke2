@@ -1,3 +1,15 @@
+/*
+* 歌った曲を検索するための画面
+* （SuggestionActivityから遷移
+* 　MainActivity or RegisterActivityへと遷移）
+*
+* アーティスト名 or 曲名を入力して検索
+* andで検索は不可
+*
+* 入力されていない場合はアラート
+*
+* */
+
 package com.example.xjapan.karaoke2;
 
 import android.content.Intent;
@@ -77,15 +89,15 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             this.startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
+        finish();
+        return true;
+    }
         return false;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 }

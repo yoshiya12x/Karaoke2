@@ -1,8 +1,17 @@
 /*
-* アプリ起動時（ユーザ登録後）の画面
+* アプリ起動時（ユーザ登録後）のルーム作成・入室画面
+* （InitialUseActivityから遷移
+* 　SuggestionActivityへと遷移）
 *
+* ルームの作成 or 入室が可能
 *
+* ルームの作成
+* ルーム名を入力してルームを作成
+* 既に存在するルーム名の場合はルームを作成せずにアラート
 *
+* ルームの入室
+* ルーム名を入力してルームに入室
+* 存在しないルーム名の場合はルームに入室せずアラート
 *
 * */
 
@@ -44,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
         roomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sb.toString().equals("")) {
-
-                } else {
+                if (!sb.toString().equals("")) {
                     Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
                     intent.putExtra("roomName", sb.toString());
                     view.getContext().startActivity(intent);
@@ -58,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
         roomCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sb.toString().equals("")) {
-
-                } else {
+                if (!sb.toString().equals("")) {
                     Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
                     intent.putExtra("roomName", sb.toString());
                     view.getContext().startActivity(intent);
