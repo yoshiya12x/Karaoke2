@@ -2,25 +2,23 @@ Music Recommender (team_e: ohsaka)【フロントエンド】
 ====
 
 ![music recommender](https://github.com/kentx422/Resource/blob/master/img/iconBlue2.png?raw=true)
-カラオケで盛り下がらない曲推薦アプリ
-（RHD Winter Internship 2016）
+
+カラオケで盛り下がらない曲推薦アプリ  
+（RHD Winter Internship 2016）  
 
 ## Description
 
-一緒に来た他の人の過去の歌唱履歴から、盛り下がらないであろう、
+一緒に来た他の人の過去の歌唱履歴から、盛り下がらないであろう、  
 むしろ盛り上がる楽曲を推薦するアプリケーション
 
 ##Equipment
 
-* HMD(Head Mount Display)  
-* モーションセンサ  
-* ステレオカメラ
-* コンピュータ  
+* Android端末
+* Android+Java
 
 ## Usage
 
-フロントエンド：Android+Java
-バックエンド：Java+Framework+Heroku
+
 
 ## Author
 
@@ -28,5 +26,3 @@ Music Recommender (team_e: ohsaka)【フロントエンド】
 鷲見創一
 前田欣
 松井健人
-
-
