@@ -1,17 +1,3 @@
-/*
-* 提案する曲を表示する画面
-* （MainActivityから遷移
-* 　MainActivity or SearchSangMusicActivity or SearchWantMusicActivityへと遷移）
-*
-* 提案する曲
-* ルームに存在するユーザ情報から提案する楽曲を決定し表示
-*
-* 歌った曲や歌いたい曲の登録画面に遷移
-*
-* ルームから退室
-*
-* */
-
 package com.example.xjapan.karaoke2;
 
 import android.content.Intent;
@@ -36,7 +22,7 @@ public class SuggestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 

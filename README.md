@@ -9,7 +9,7 @@ Music Recommender (team_e: ohsaka)【フロントエンド】
 ## Description
 
 一緒に来た他の人の過去の歌唱履歴から、盛り下がらないであろう、  
-むしろ盛り上がる楽曲を推薦するアプリケーション
+むしろ盛り上がる楽曲を推薦するアプリケーション  
 
 ##Equipment
 
@@ -17,6 +17,7 @@ Music Recommender (team_e: ohsaka)【フロントエンド】
 * Android+Java
 
 ## Usage
+
 
 
 
