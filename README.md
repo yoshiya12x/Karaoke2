@@ -1,4 +1,5 @@
-Music Recommender (team_e: ohsaka)【フロントエンド】
+Music Recommender (team_e: ohsaka)  
+【フロントエンド】
 ====
 
 ![music recommender](https://github.com/kentx422/Resource/blob/master/img/iconBlue2.png?raw=true)
