@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void failure(RetrofitError error) {
                             //ここにルームがないアラート
+                            Toast.makeText(context, "そのルームはありません", Toast.LENGTH_LONG).show();
                             Log.d("musicRecommendList_test", error.toString());
                         }
                     });
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            //ここにルームがないアラート
+                            Toast.makeText(context, "すでにそのルームはあります", Toast.LENGTH_LONG).show();
                             Log.d("musicRecommendList_test", error.toString());
                         }
                     });

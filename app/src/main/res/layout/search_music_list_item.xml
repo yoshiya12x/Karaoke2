@@ -3,12 +3,14 @@
     android:id="@+id/register_music_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="40dp"
+    android:background="@drawable/listview"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/sear_music_name"
         android:layout_width="match_parent"
+        android:textColor="@color/colorBlack"
         android:layout_height="wrap_content"
         android:textSize="18dp" />
 

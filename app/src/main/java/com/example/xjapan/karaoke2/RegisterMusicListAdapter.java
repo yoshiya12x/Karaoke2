@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class RegisterMusicListAdapter extends BaseAdapter {
 
+    private Context context;
     private UserDB userDB;
     private LayoutInflater inflater;
     private List<MusicTitle> musicTitleList;
@@ -22,6 +23,7 @@ public class RegisterMusicListAdapter extends BaseAdapter {
     private LinearLayout linearLayout;
 
     public RegisterMusicListAdapter(Context context, List<MusicTitle> musicTitleList, int viewFlag) {
+        this.context = context;
         this.userDB = new UserDB(context);
         this.inflater = LayoutInflater.from(context);
         this.musicTitleList = musicTitleList;
@@ -55,12 +57,11 @@ public class RegisterMusicListAdapter extends BaseAdapter {
                 if (viewFlag == 0) {
 
                 } else if (viewFlag == 1) {
-
 //                    ArrayList<String> userInfo = userDB.selectAll();
 //                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
 //                        @Override
 //                        public void success(UserInfo userInfo, Response response) {
-//                            //linearLayout.setBackgroundColor(Color.WHITE);
+//                            Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
 //                        }
 //
 //                        @Override
