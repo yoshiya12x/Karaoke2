@@ -22,11 +22,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!sb.toString().equals("")) {
+                    AppClient.getService().roomIn(Integer.parseInt(userInfo.get(1)), sb.toString(), new Callback<UserInfo>() {
+                        @Override
+                        public void success(UserInfo userInfo, Response response) {
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("musicRecommendList_test", error.toString());
+                        }
+                    });
+
+
                     Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
                     intent.putExtra("roomName", sb.toString());
                     intent.putExtra("account_id", userInfo.get(0));
