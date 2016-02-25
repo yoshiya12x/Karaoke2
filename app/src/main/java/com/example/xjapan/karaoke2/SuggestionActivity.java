@@ -43,27 +43,12 @@ public class SuggestionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.action_want_music) {
-//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-//            this.startActivity(intent);
-//            return true;} else
         if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
-            AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
-                @Override
-                public void success(UserInfo successUserInfo, Response response) {
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.d("musicRecommendList_test", error.toString());
-                }
-            });
-
+            invokeRoomOut();
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             return true;
@@ -89,6 +74,20 @@ public class SuggestionActivity extends AppCompatActivity {
             public void success(List<MusicRecommend> musicRecommendList, Response response) {
                 SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicRecommendList);
                 musicListView.setAdapter(suggestionMusicListAdapter);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
+    }
+
+    public void invokeRoomOut() {
+        AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
+            @Override
+            public void success(UserInfo successUserInfo, Response response) {
+
             }
 
             @Override

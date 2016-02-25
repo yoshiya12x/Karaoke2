@@ -29,8 +29,6 @@ import retrofit.client.Response;
 
 public class InitialUseActivity extends AppCompatActivity {
 
-    private EditText userNameEditText;
-    private Button userRegisterButton;
     private SpannableStringBuilder sb;
     private Context context;
 
@@ -38,15 +36,14 @@ public class InitialUseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_use);
+
         this.context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("登録画面");
         setSupportActionBar(toolbar);
-
-        userNameEditText = (EditText) findViewById(R.id.userNameEditText);
+        EditText userNameEditText = (EditText) findViewById(R.id.userNameEditText);
         sb = (SpannableStringBuilder) userNameEditText.getText();
-
-        userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
+        Button userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +59,7 @@ public class InitialUseActivity extends AppCompatActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.d("musicRecommendList_test", error.toString());
+                            Log.d("getUserInfo", error.toString());
                         }
                     });
                 }

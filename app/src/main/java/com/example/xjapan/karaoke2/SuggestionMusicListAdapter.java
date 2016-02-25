@@ -39,11 +39,19 @@ public class SuggestionMusicListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.suggestion_music_list_item, viewGroup, false);
-        TextView musicNameTextView = (TextView) view.findViewById(R.id.music_name);
-        MusicRecommend musicRecommend = musicRecommendList.get(i);
-        musicNameTextView.setText(musicRecommend.title + "(" + musicRecommend.artist + ")");
+        ViewHolder holder;
+        if (view == null) {
+            view = inflater.inflate(R.layout.suggestion_music_list_item, viewGroup, false);
+            holder = new ViewHolder();
+            holder.musicNameTextView = (TextView) view.findViewById(R.id.music_name);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
+        MusicRecommend musicRecommend = musicRecommendList.get(i);
+        String musicName = musicRecommend.title + "(" + musicRecommend.artist + ")";
+        holder.musicNameTextView.setText(musicName);
         return view;
     }
 }
