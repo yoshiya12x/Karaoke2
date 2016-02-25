@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("musicRecommendList_test", error.toString());
                         }
                     });
-
-
                 }
 
             }
@@ -87,13 +85,23 @@ public class MainActivity extends AppCompatActivity {
         roomCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!sb.toString().equals("")) {
-                    Intent intent = new Intent(view.getContext(), SuggestionActivity.class);
-                    intent.putExtra("roomName", sb.toString());
-                    intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
-                    view.getContext().startActivity(intent);
-                }
+                if (!sb.toString().equals("")) {//createRoom
+                    AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
+                        @Override
+                        public void success(UserInfo successUserInfo, Response response) {
+                            Intent intent = new Intent(context, SuggestionActivity.class);
+                            intent.putExtra("roomName", sb.toString());
+                            intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
+                            context.startActivity(intent);
+                        }
 
+                        @Override
+                        public void failure(RetrofitError error) {
+                            //ここにルームがないアラート
+                            Log.d("musicRecommendList_test", error.toString());
+                        }
+                    });
+                }
             }
         });
 

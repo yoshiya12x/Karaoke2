@@ -65,7 +65,7 @@ public class RegisterMusicListAdapter extends BaseAdapter {
                 } else if (viewFlag == 1) {
                     //sung;register_sung_music
                     ArrayList<String> userInfo = userDB.selectAll();
-                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(1)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
+                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
                         @Override
                         public void success(UserInfo userInfo, Response response) {
                             linearLayout.setBackgroundColor(Color.WHITE);
