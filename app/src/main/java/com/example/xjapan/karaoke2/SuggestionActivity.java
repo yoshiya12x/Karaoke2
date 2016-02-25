@@ -20,6 +20,7 @@ public class SuggestionActivity extends AppCompatActivity {
 
     private ArrayList<String> musicList;
     private ListView musicListView;
+    private int accountId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class SuggestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestion);
 
         Intent intent = getIntent();
-        int accountId = intent.getIntExtra("account_id", 0);
+        accountId = intent.getIntExtra("account_id", 0);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
         setSupportActionBar(toolbar);
@@ -61,6 +62,18 @@ public class SuggestionActivity extends AppCompatActivity {
             this.startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
+            AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
+                @Override
+                public void success(UserInfo successUserInfo, Response response) {
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d("musicRecommendList_test", error.toString());
+                }
+            });
+
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             return true;

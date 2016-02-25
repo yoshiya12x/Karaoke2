@@ -88,5 +88,10 @@ public class AppClient {
                 @Query("account_id") int account_id,
                 @Query("room_name") String room_name,
                 Callback<UserInfo> callback);
+
+        @GET("/room/out")
+        void roomOut(
+                @Query("account_id") int account_id,
+                Callback<UserInfo> callback);
     }
 }
