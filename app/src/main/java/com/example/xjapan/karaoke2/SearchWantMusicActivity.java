@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -73,11 +72,11 @@ public class SearchWantMusicActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_want_music) {
-            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.action_sang_music) {
+//        if (id == R.id.action_want_music) {
+//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
+//            this.startActivity(intent);
+//            return true;} else
+        if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
             return true;

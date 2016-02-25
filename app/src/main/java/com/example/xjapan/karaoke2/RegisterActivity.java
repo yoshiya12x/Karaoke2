@@ -68,18 +68,34 @@ public class RegisterActivity extends AppCompatActivity {
             });
 
         } else if (viewFlag == 1) {
-            AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-                @Override
-                public void success(List<MusicTitle> musicTitleList, Response response) {
-                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
-                    registerMusicListView.setAdapter(registerMusicListAdapter);
-                }
+            if (typeFlag == 0) {
+                AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+                    @Override
+                    public void success(List<MusicTitle> musicTitleList, Response response) {
+                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                        registerMusicListView.setAdapter(registerMusicListAdapter);
+                    }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.d("musicRecommendList_test", error.toString());
-                }
-            });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("musicRecommendList_test", error.toString());
+                    }
+                });
+            } else if (typeFlag == 1) {
+                AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+                    @Override
+                    public void success(List<MusicTitle> musicTitleList, Response response) {
+                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                        registerMusicListView.setAdapter(registerMusicListAdapter);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("musicRecommendList_test", error.toString());
+                    }
+                });
+            }
+
         }
 
     }
@@ -87,11 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_want_music) {
-            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.action_sang_music) {
+//        if (id == R.id.action_want_music) {
+//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
+//            this.startActivity(intent);
+//            return true;} else
+        if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
             return true;

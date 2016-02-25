@@ -2,11 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.xjapan.karaoke2.MainActivity">
-    <item
-        android:id="@+id/action_want_music"
-        android:orderInCategory="100"
-        android:title="歌いたい曲を登録"
-        app:showAsAction="never" />
+    <!--<item-->
+    <!--android:id="@+id/action_want_music"-->
+    <!--android:orderInCategory="100"-->
+    <!--android:title="歌いたい曲を登録"-->
+    <!--app:showAsAction="never" />-->
     <item
         android:id="@+id/action_sang_music"
         android:orderInCategory="100"

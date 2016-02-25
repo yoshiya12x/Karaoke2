@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     static final String DatabaseName = "KaraokeDB";
-    static final int DatabaseVersion = 18;
+    static final int DatabaseVersion = 20;
 
     public SQLiteHelper(Context mContext) {
         super(mContext, DatabaseName, null, DatabaseVersion);

@@ -27,8 +27,7 @@ public class SuggestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestion);
 
         Intent intent = getIntent();
-        int accountId = intent.getIntExtra("account_id", 2); //0:artist 1:music 2:error
-
+        int accountId = intent.getIntExtra("account_id", 0);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(intent.getStringExtra("roomName"));
         setSupportActionBar(toolbar);
@@ -53,11 +52,11 @@ public class SuggestionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_want_music) {
-            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.action_sang_music) {
+//        if (id == R.id.action_want_music) {
+//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
+//            this.startActivity(intent);
+//            return true;} else
+        if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
             return true;
