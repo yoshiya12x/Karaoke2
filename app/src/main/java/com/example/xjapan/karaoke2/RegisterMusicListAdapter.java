@@ -1,14 +1,21 @@
 package com.example.xjapan.karaoke2;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by xjapan on 16/02/23.
@@ -57,18 +64,18 @@ public class RegisterMusicListAdapter extends BaseAdapter {
                 if (viewFlag == 0) {
 
                 } else if (viewFlag == 1) {
-//                    ArrayList<String> userInfo = userDB.selectAll();
-//                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
-//                        @Override
-//                        public void success(UserInfo userInfo, Response response) {
-//                            Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
-//                        }
-//
-//                        @Override
-//                        public void failure(RetrofitError error) {
-//                            Log.d("musicRecommendList_test", error.toString());
-//                        }
-//                    });
+                    ArrayList<String> userInfo = userDB.selectAll();
+                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
+                        @Override
+                        public void success(UserInfo userInfo, Response response) {
+                            Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("musicRecommendList_test", error.toString());
+                        }
+                    });
                 }
             }
         });
