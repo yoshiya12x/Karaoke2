@@ -41,58 +41,30 @@ public class RegisterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra("typeFlag", 2);
-        final int viewFlag = intent.getIntExtra("viewFlag", 2);
         String postName = intent.getStringExtra("postName");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
         registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
-        if (typeFlag == 0) {
-            toolbar.setTitle("アーティスト名(" + postName + ")");
-        } else if (typeFlag == 1) {
-            toolbar.setTitle("曲名(" + postName + ")");
-        } else {
-            toolbar.setTitle("error(" + postName + ")");
-        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        if (viewFlag == 0) {
-            AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-                @Override
-                public void success(List<MusicTitle> musicTitleList, Response response) {
-                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
-                    registerMusicListView.setAdapter(registerMusicListAdapter);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.d("musicRecommendList_test", error.toString());
-                }
-            });
-
-        } else if (viewFlag == 1) {
-            if (typeFlag == 0) {
-                setSearchMusicTitleFastByArtistName(postName, viewFlag);
-                setSearchMusicTitleByArtistName(postName, viewFlag);
-            } else if (typeFlag == 1) {
-                setSearchMusicTitleFastByMusicName(postName, viewFlag);
-                setSearchMusicTitleByMusicName(postName, viewFlag);
-            }
-
+        if (typeFlag == 0) {
+            toolbar.setTitle("アーティスト名(" + postName + ")");
+            setSearchMusicTitleFastByArtistName(postName);
+            setSearchMusicTitleByArtistName(postName);
+        } else if (typeFlag == 1) {
+            toolbar.setTitle("曲名(" + postName + ")");
+            setSearchMusicTitleFastByMusicName(postName);
+            setSearchMusicTitleByMusicName(postName);
         }
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.action_want_music) {
-//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-//            this.startActivity(intent);
-//            return true;} else
         if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
@@ -108,11 +80,11 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-    public void setSearchMusicTitleByArtistName(String postName, final int viewFlag) {
+    public void setSearchMusicTitleByArtistName(String postName) {
         AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
                 registerMusicListView.setAdapter(registerMusicListAdapter);
                 alertRegisterTextView.setText("登録する曲をタップしてください");
             }
@@ -124,11 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleByMusicName(String postName, final int viewFlag) {
+    public void setSearchMusicTitleByMusicName(String postName) {
         AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
                 registerMusicListView.setAdapter(registerMusicListAdapter);
                 alertRegisterTextView.setText("登録する曲をタップしてください");
             }
@@ -140,11 +112,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleFastByArtistName(String postName, final int viewFlag) {
+    public void setSearchMusicTitleFastByArtistName(String postName) {
         AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
                 registerMusicListView.setAdapter(registerMusicListAdapter);
                 alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
             }
@@ -156,11 +128,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleFastByMusicName(String postName, final int viewFlag) {
+    public void setSearchMusicTitleFastByMusicName(String postName) {
         AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
                 registerMusicListView.setAdapter(registerMusicListAdapter);
                 alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
             }

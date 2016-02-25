@@ -48,9 +48,8 @@ public class SuggestionMusicListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
         MusicRecommend musicRecommend = musicRecommendList.get(i);
-        String musicName = musicRecommend.title + "(" + musicRecommend.artist + ")";
+        String musicName = musicRecommend.getTitle() + "(" + musicRecommend.getArtist() + ")";
         holder.musicNameTextView.setText(musicName);
         return view;
     }

@@ -26,15 +26,12 @@ public class RegisterMusicListAdapter extends BaseAdapter {
     private UserDB userDB;
     private LayoutInflater inflater;
     private List<MusicTitle> musicTitleList;
-    private int viewFlag;
-    private LinearLayout linearLayout;
 
-    public RegisterMusicListAdapter(Context context, List<MusicTitle> musicTitleList, int viewFlag) {
+    public RegisterMusicListAdapter(Context context, List<MusicTitle> musicTitleList) {
         this.context = context;
         this.userDB = new UserDB(context);
         this.inflater = LayoutInflater.from(context);
         this.musicTitleList = musicTitleList;
-        this.viewFlag = viewFlag;
     }
 
     @Override
@@ -54,32 +51,35 @@ public class RegisterMusicListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.search_music_list_item, viewGroup, false);
-        TextView musicNameTextView = (TextView) view.findViewById(R.id.sear_music_name);
-        musicNameTextView.setText(musicTitleList.get(i).title + "(" + musicTitleList.get(i).artist + ")");
-        linearLayout = (LinearLayout) view.findViewById(R.id.register_music_linear_layout);
+        ViewHolder holder;
+        if (view == null) {
+            view = inflater.inflate(R.layout.search_music_list_item, viewGroup, false);
+            holder = new ViewHolder();
+            holder.musicNameTextView = (TextView) view.findViewById(R.id.sear_music_name);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+        String musicName = musicTitleList.get(i).getTitle() + "(" + musicTitleList.get(i).getArtist() + ")";
+        holder.musicNameTextView.setText(musicName);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.register_music_linear_layout);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (viewFlag == 0) {
+                ArrayList<String> userInfo = userDB.selectAll();
+                AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).getMusicId(), new Callback<UserInfo>() {
+                    @Override
+                    public void success(UserInfo userInfo, Response response) {
+                        Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
+                    }
 
-                } else if (viewFlag == 1) {
-                    ArrayList<String> userInfo = userDB.selectAll();
-                    AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).music_id, new Callback<UserInfo>() {
-                        @Override
-                        public void success(UserInfo userInfo, Response response) {
-                            Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            Log.d("musicRecommendList_test", error.toString());
-                        }
-                    });
-                }
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("musicRecommendList_test", error.toString());
+                    }
+                });
             }
         });
-
         return view;
     }
 }

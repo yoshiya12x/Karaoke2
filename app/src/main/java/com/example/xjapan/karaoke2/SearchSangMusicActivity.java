@@ -24,8 +24,6 @@ import android.widget.EditText;
 
 public class SearchSangMusicActivity extends AppCompatActivity {
 
-    private Button artistSearchButton;
-    private Button musicSearchButton;
     private EditText artistEditText;
     private EditText musicEditText;
 
@@ -40,34 +38,34 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         artistEditText = (EditText) findViewById(R.id.artistSangEditText);
-        artistSearchButton = (Button) findViewById(R.id.searchArtistSangButton);
+        Button artistSearchButton = (Button) findViewById(R.id.searchArtistSangButton);
         artistSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SpannableStringBuilder sb = (SpannableStringBuilder) artistEditText.getText();
-                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                //artist=0,music=1
-                intent.putExtra("typeFlag", 0);
-                //want=0,sang=1
-                intent.putExtra("viewFlag", 1);
-                intent.putExtra("postName", sb.toString());
-                view.getContext().startActivity(intent);
+                if (!sb.toString().equals("")) {
+                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+                    //artist=0,music=1
+                    intent.putExtra("typeFlag", 0);
+                    intent.putExtra("postName", sb.toString());
+                    view.getContext().startActivity(intent);
+                }
             }
         });
 
         musicEditText = (EditText) findViewById(R.id.musicSangEditText);
-        musicSearchButton = (Button) findViewById(R.id.searchMusicSangButton);
+        Button musicSearchButton = (Button) findViewById(R.id.searchMusicSangButton);
         musicSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SpannableStringBuilder sb = (SpannableStringBuilder) musicEditText.getText();
-                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                //artist=0,music=1
-                intent.putExtra("typeFlag", 1);
-                //want=0,sang=1
-                intent.putExtra("viewFlag", 1);
-                intent.putExtra("postName", sb.toString());
-                view.getContext().startActivity(intent);
+                if (!sb.toString().equals("")) {
+                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+                    //artist=0,music=1
+                    intent.putExtra("typeFlag", 1);
+                    intent.putExtra("postName", sb.toString());
+                    view.getContext().startActivity(intent);
+                }
             }
         });
     }
@@ -75,10 +73,6 @@ public class SearchSangMusicActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.action_want_music) {
-//            Intent intent = new Intent(this, SearchWantMusicActivity.class);
-//            this.startActivity(intent);
-//            return true;} else
         if (id == R.id.action_sang_music) {
             Intent intent = new Intent(this, SearchSangMusicActivity.class);
             this.startActivity(intent);
@@ -94,9 +88,4 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         return false;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
 }

@@ -52,7 +52,7 @@ public class InitialUseActivity extends AppCompatActivity {
                         @Override
                         public void success(UserInfo userInfo, Response response) {
                             UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(userInfo.account_id, sb.toString());
+                            userDB.insertAll(userInfo.getAccountId(), sb.toString());
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
                         }
