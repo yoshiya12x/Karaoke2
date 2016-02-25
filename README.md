@@ -22,6 +22,10 @@ retrofit
 ## Usage
 リポジトリをクローンしコンパイル
 
+##Example
+1,a
+2,b
+
 ## Author
 
 有馬諒　（バックエンド）  
