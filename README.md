@@ -16,10 +16,11 @@ Music Recommender (team_e: ohsaka)【フロントエンド】
 * Android端末
 * Android+Java
 
+##Library
+retrofit
+
 ## Usage
-
-
-
+リポジトリをクローンしコンパイル
 
 ## Author
 
