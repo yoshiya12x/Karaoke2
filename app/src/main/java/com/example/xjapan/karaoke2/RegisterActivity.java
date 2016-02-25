@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private TextView alertRegisterTextView;
     private ListView registerMusicListView;
     private Context context;
 
@@ -44,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
         registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
         if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
@@ -72,31 +75,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else if (viewFlag == 1) {
             if (typeFlag == 0) {
-                AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-                    @Override
-                    public void success(List<MusicTitle> musicTitleList, Response response) {
-                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
-                        registerMusicListView.setAdapter(registerMusicListAdapter);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("musicRecommendList_test", error.toString());
-                    }
-                });
+                setSearchMusicTitleFastByArtistName(postName, viewFlag);
+                setSearchMusicTitleByArtistName(postName, viewFlag);
             } else if (typeFlag == 1) {
-                AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-                    @Override
-                    public void success(List<MusicTitle> musicTitleList, Response response) {
-                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
-                        registerMusicListView.setAdapter(registerMusicListAdapter);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("musicRecommendList_test", error.toString());
-                    }
-                });
+                setSearchMusicTitleFastByMusicName(postName, viewFlag);
+                setSearchMusicTitleByMusicName(postName, viewFlag);
             }
 
         }
@@ -123,5 +106,69 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public void setSearchMusicTitleByArtistName(String postName, final int viewFlag) {
+        AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+            @Override
+            public void success(List<MusicTitle> musicTitleList, Response response) {
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                registerMusicListView.setAdapter(registerMusicListAdapter);
+                alertRegisterTextView.setText("登録する曲をタップしてください");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
+    }
+
+    public void setSearchMusicTitleByMusicName(String postName, final int viewFlag) {
+        AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+            @Override
+            public void success(List<MusicTitle> musicTitleList, Response response) {
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                registerMusicListView.setAdapter(registerMusicListAdapter);
+                alertRegisterTextView.setText("登録する曲をタップしてください");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
+    }
+
+    public void setSearchMusicTitleFastByArtistName(String postName, final int viewFlag) {
+        AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+            @Override
+            public void success(List<MusicTitle> musicTitleList, Response response) {
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                registerMusicListView.setAdapter(registerMusicListAdapter);
+                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
+    }
+
+    public void setSearchMusicTitleFastByMusicName(String postName, final int viewFlag) {
+        AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+            @Override
+            public void success(List<MusicTitle> musicTitleList, Response response) {
+                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
+                registerMusicListView.setAdapter(registerMusicListAdapter);
+                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
     }
 }

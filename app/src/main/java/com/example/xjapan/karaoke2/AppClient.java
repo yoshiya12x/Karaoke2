@@ -72,6 +72,22 @@ public class AppClient {
                 Callback<List<MusicTitle>> callback
         );
 
+        @GET("/search_music_title_ranged_fast")
+        void getSearchMusicTitleFastByMusicName(
+                @Query("music_name") String music_name,
+                @Query("page_length") int page_length,
+                @Query("page_number") int page_number,
+                Callback<List<MusicTitle>> callback
+        );
+
+        @GET("/search_music_artist_ranged_fast")
+        void getSearchMusicTitleFastByArtistName(
+                @Query("artist_name") String artist_name,
+                @Query("page_length") int page_length,
+                @Query("page_number") int page_number,
+                Callback<List<MusicTitle>> callback
+        );
+
         @GET("/account")
         void getUserInfo(
                 @Query("name") String name,
