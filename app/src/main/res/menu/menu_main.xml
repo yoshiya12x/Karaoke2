@@ -17,4 +17,11 @@
         android:orderInCategory="100"
         android:title="退室"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reload"
+        android:icon="@drawable/reload"
+        android:orderInCategory="102"
+        android:title="reload"
+        app:showAsAction="ifRoom" />
 </menu>

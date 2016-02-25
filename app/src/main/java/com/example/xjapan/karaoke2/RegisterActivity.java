@@ -11,6 +11,7 @@
 
 package com.example.xjapan.karaoke2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,11 +29,13 @@ import retrofit.client.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private ListView registerMusicListView;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        context = this;
 
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra("typeFlag", 2);
@@ -57,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
                 @Override
                 public void success(List<MusicTitle> musicTitleList, Response response) {
-                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                    RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
                     registerMusicListView.setAdapter(registerMusicListAdapter);
                 }
 
@@ -72,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                 AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
                     @Override
                     public void success(List<MusicTitle> musicTitleList, Response response) {
-                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
                         registerMusicListView.setAdapter(registerMusicListAdapter);
                     }
 
@@ -85,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
                     @Override
                     public void success(List<MusicTitle> musicTitleList, Response response) {
-                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(getApplicationContext(), musicTitleList, viewFlag);
+                        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList, viewFlag);
                         registerMusicListView.setAdapter(registerMusicListAdapter);
                     }
 

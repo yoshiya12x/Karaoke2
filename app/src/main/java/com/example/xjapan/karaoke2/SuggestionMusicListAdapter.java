@@ -1,7 +1,6 @@
 package com.example.xjapan.karaoke2;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ public class SuggestionMusicListAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.suggestion_music_list_item, viewGroup, false);
         TextView musicNameTextView = (TextView) view.findViewById(R.id.music_name);
         MusicRecommend musicRecommend = musicRecommendList.get(i);
-        Log.d("test", musicRecommend.music_id+"");
         musicNameTextView.setText(musicRecommend.title + "(" + musicRecommend.artist + ")");
 
         return view;

@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -18,7 +17,6 @@ import retrofit.client.Response;
 
 public class SuggestionActivity extends AppCompatActivity {
 
-    private ArrayList<String> musicList;
     private ListView musicListView;
     private int accountId;
 
@@ -34,20 +32,12 @@ public class SuggestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         musicListView = (ListView) findViewById(R.id.suggetionMusicListView);
+    }
 
-        musicList = new ArrayList<>();
-        AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
-            @Override
-            public void success(List<MusicRecommend> musicRecommendList, Response response) {
-                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicRecommendList);
-                musicListView.setAdapter(suggestionMusicListAdapter);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        setMusicRecommend();
     }
 
     @Override
@@ -80,6 +70,9 @@ public class SuggestionActivity extends AppCompatActivity {
         } else if (id == android.R.id.home) {
             finish();
             return true;
+        } else if (id == R.id.action_reload) {
+            setMusicRecommend();
+            return true;
         }
         return false;
     }
@@ -90,5 +83,18 @@ public class SuggestionActivity extends AppCompatActivity {
         return true;
     }
 
+    public void setMusicRecommend() {
+        AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
+            @Override
+            public void success(List<MusicRecommend> musicRecommendList, Response response) {
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicRecommendList);
+                musicListView.setAdapter(suggestionMusicListAdapter);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("musicRecommendList_test", error.toString());
+            }
+        });
+    }
 }
