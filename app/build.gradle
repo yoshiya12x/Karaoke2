@@ -14,7 +14,11 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "API_END_POINT", "\"http://musicrecommender.herokuapp.com\""
+        }
         release {
+            buildConfigField "String", "API_END_POINT", "\"http://musicrecommender.herokuapp.com\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -36,4 +40,6 @@ dependencies {
 
     apt 'com.github.gfx.android.orma:orma-processor:2.0.6'
     compile 'com.github.gfx.android.orma:orma:2.0.6'
+
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

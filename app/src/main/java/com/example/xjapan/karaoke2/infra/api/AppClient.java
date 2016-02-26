@@ -1,5 +1,6 @@
 package com.example.xjapan.karaoke2.infra.api;
 
+import com.example.xjapan.karaoke2.BuildConfig;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicRecommend;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.infra.db.entity.User;
@@ -22,9 +23,9 @@ import retrofit.http.Query;
  */
 public class AppClient {
 
-    private String END_POINT = "http://musicrecommender.herokuapp.com";
-    private static AppClient sInstance = new AppClient();
-    private AppService service;
+    private final static AppClient sInstance = new AppClient();
+    private final AppService service;
+    private final SyncService syncService;
 
     private AppClient() {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
@@ -40,19 +41,85 @@ public class AppClient {
                 .create();
 
         service = new RestAdapter.Builder()
-                .setEndpoint(END_POINT)
+                .setEndpoint(BuildConfig.API_END_POINT)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("=NETWORK="))
                 .build()
                 .create(AppService.class);
+
+        RestAdapter.Builder builder = new RestAdapter.Builder();
+        builder.setEndpoint(BuildConfig.API_END_POINT)
+                .setConverter(new GsonConverter(gson));
+
+        if (BuildConfig.DEBUG) {
+            builder.setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("= Sync Service ="));
+        } else {
+            builder.setLogLevel(RestAdapter.LogLevel.NONE);
+        }
+
+        syncService = builder.build().create(SyncService.class);
     }
+
+    public static SyncService sync() { return sInstance.syncService; }
 
     public static AppService getService() {
         return sInstance.service;
     }
 
+    public interface SyncService {
+        @GET("/recommend")
+        List<MusicRecommend> fetchMusicRecommendations(
+                @Query("id") int id
+        );
+
+        @GET("/search_music_title_ranged")
+        List<MusicTitle> fetchMusicTitlesByMusicName(
+                @Query("music_name") String musicName,
+                @Query("page_length") int length,
+                @Query("page_number") int number
+        );
+
+        @GET("/search_music_artist_ranged")
+        List<MusicTitle> fetchMusicTitlesByArtistName(
+                @Query("artist_name") String artistName,
+                @Query("page_length") int length,
+                @Query("page_number") int number
+        );
+
+        @GET("/account")
+        User createUser(
+                @Query("name") String name
+        );
+
+        @GET("/sung_music")
+        User createSungMusic(
+                @Query("account_id") int accountId,
+                @Query("music_id") int musicId
+        );
+
+        @GET("/room/in")
+        User enterRoom(
+                @Query("account_id") int accountId,
+                @Query("room_name") String roomName
+        );
+
+        @GET("/room/out")
+        User leaveRoom(
+                @Query("account_id") int accountId
+        );
+
+        @GET("/create_room")
+        User createRoom(
+                @Query("room_name") String roomName,
+                @Query("user_id") int userId
+        );
+    }
+
     public interface AppService {
+
+
         @GET("/recommend")
         void getMusicRecommend(
                 @Query("id") int id,
