@@ -14,10 +14,17 @@ package com.example.xjapan.karaoke2.presentation.activity.registration;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +33,8 @@ import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.presentation.activity.search.SearchSangMusicActivity;
+import com.example.xjapan.karaoke2.presentation.common.adapter.ArrayRecyclerAdapter;
+import com.example.xjapan.karaoke2.presentation.common.decoration.SpaceItemDecoration;
 
 import java.util.List;
 
@@ -36,14 +45,12 @@ import retrofit.client.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView alertRegisterTextView;
-    private ListView registerMusicListView;
-    private Context context;
+    private MusicAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        context = this;
 
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra("typeFlag", 2);
@@ -52,7 +59,13 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
-        registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.registerMusicListView);
+        recyclerView.setAdapter(adapter = new MusicAdapter(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        int space = getResources().getDimensionPixelSize(R.dimen.fab_margin);
+        recyclerView.addItemDecoration(new SpaceItemDecoration(space));
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -90,8 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
+                adapter.addAll(musicTitleList);
+                adapter.notifyDataSetChanged();
+
                 alertRegisterTextView.setText("登録する曲をタップしてください");
             }
 
@@ -106,8 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
+                adapter.addAll(musicTitleList);
                 alertRegisterTextView.setText("登録する曲をタップしてください");
             }
 
@@ -122,8 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
+                adapter.addAll(musicTitleList);
                 alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
             }
 
@@ -138,8 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
+                adapter.addAll(musicTitleList);
                 alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
             }
 
@@ -148,5 +159,47 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("musicRecommendList_test", error.toString());
             }
         });
+    }
+
+    private class MusicViewHolder extends RecyclerView.ViewHolder {
+        private TextView musicNameText;
+        private View body;
+
+        public MusicViewHolder(View itemView) {
+            super(itemView);
+
+            body = itemView.findViewById(R.id.register_music_linear_layout);
+            musicNameText = (TextView) itemView.findViewById(R.id.sear_music_name);
+
+            assert body != null;
+            assert musicNameText != null;
+        }
+    }
+
+    private class MusicAdapter extends ArrayRecyclerAdapter<MusicTitle, MusicViewHolder> {
+
+        public MusicAdapter(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        public MusicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new MusicViewHolder(LayoutInflater.from(RegisterActivity.this).inflate(R.layout.search_music_list_item, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(final MusicViewHolder holder, final int position) {
+            MusicTitle music = get(position);
+
+            String name = getString(R.string.format_music_info, music.getTitle(), music.getArtist());
+            holder.musicNameText.setText(name);
+
+            holder.body.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dispatchItemClick(position, holder);
+                }
+            });
+        }
     }
 }

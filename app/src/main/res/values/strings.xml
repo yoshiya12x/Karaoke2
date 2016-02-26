@@ -28,4 +28,7 @@
     <string name="text_search">検索</string>
     <string name="text_enter_room">ルーム入室</string>
 
+    <!-- format -->
+
+    <string name="format_music_info">%1$s(%2$s)</string>
 </resources>
