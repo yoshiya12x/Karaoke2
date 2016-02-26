@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,14 +28,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.xjapan.karaoke2.ViewHolder;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
+import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
+import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.presentation.activity.search.SearchSangMusicActivity;
 import com.example.xjapan.karaoke2.presentation.common.adapter.ArrayRecyclerAdapter;
 import com.example.xjapan.karaoke2.presentation.common.decoration.SpaceItemDecoration;
+import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
+import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
+import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.registration.RegisterMusicUseCase;
 
 import java.util.List;
 
@@ -43,6 +52,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private TextView alertRegisterTextView;
     private MusicAdapter adapter;
@@ -63,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.registerMusicListView);
         recyclerView.setAdapter(adapter = new MusicAdapter(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         int space = getResources().getDimensionPixelSize(R.dimen.fab_margin);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
@@ -188,16 +200,27 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(final MusicViewHolder holder, final int position) {
-            MusicTitle music = get(position);
+        public void onBindViewHolder(MusicViewHolder holder, int position) {
+            final MusicTitle music = get(position);
 
             String name = getString(R.string.format_music_info, music.getTitle(), music.getArtist());
             holder.musicNameText.setText(name);
 
             holder.body.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    dispatchItemClick(position, holder);
+                public void onClick(final View v) {
+                    RegisterMusicUseCase useCase = new RegisterMusicUseCase(new UserDB(getApplicationContext()));
+                    useCase.apply(music, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
+                        @Override
+                        public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
+                            Snackbar.make(v, "登録しました", Snackbar.LENGTH_INDEFINITE).show();
+                        }
+                    }, new FailureCallback<RetrofitError>() {
+                        @Override
+                        public void onFailure(RetrofitError error) {
+                            Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+                        }
+                    });
                 }
             });
         }

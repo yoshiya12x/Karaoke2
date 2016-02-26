@@ -3,7 +3,6 @@ package com.example.xjapan.karaoke2.presentation.common.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.example.xjapan.karaoke2.common.ThinList;
 
@@ -19,9 +18,6 @@ public abstract class ArrayRecyclerAdapter<T, VH extends RecyclerView.ViewHolder
 
     private final Context context;
     private final List<T> items;
-
-    private OnItemClickListener onItemClickListener;
-    private OnItemLongClickListener onItemLongClickListener;
 
     public ArrayRecyclerAdapter(@NonNull Context context) {
         if (context.getApplicationContext() == context) {
@@ -71,37 +67,5 @@ public abstract class ArrayRecyclerAdapter<T, VH extends RecyclerView.ViewHolder
     @Override
     public Iterator<T> iterator() {
         return items.listIterator();
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
-    }
-
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.onItemLongClickListener = listener;
-    }
-
-    protected boolean dispatchItemClick(int position, VH holder) {
-        if (onItemClickListener != null) {
-            return onItemClickListener.onItemClick(position, holder);
-        }
-
-        return false;
-    }
-
-    protected boolean dispatchItemLongClick(int position, VH holder) {
-        if (onItemLongClickListener != null) {
-            return onItemLongClickListener.onItemLongClick(position, holder);
-        }
-
-        return false;
-    }
-
-    public interface OnItemClickListener<VH> {
-        boolean onItemClick(int position, VH holder);
-    }
-
-    public interface OnItemLongClickListener<VH> {
-        boolean onItemLongClick(int position, VH holder);
     }
 }
