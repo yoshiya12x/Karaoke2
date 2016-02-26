@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +25,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.xjapan.karaoke2.ViewHolder;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
 import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
 import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
@@ -71,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
 
@@ -81,8 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
         int space = getResources().getDimensionPixelSize(R.dimen.fab_margin);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         if (typeFlag == 0) {
             toolbar.setTitle(getString(R.string.title__register__format__artist, postName));
