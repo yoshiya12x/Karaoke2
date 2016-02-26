@@ -49,6 +49,11 @@ public abstract class ArrayRecyclerAdapter<T, VH extends RecyclerView.ViewHolder
         this.items.addAll(items);
     }
 
+    public void addAllWithNotify(Collection<T> items) {
+        addAll(items);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void addAll(int position, Collection<T> items) {
         this.items.addAll(position, items);

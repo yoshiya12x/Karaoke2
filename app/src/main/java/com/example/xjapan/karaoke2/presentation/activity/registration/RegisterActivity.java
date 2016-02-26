@@ -83,11 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         if (typeFlag == 0) {
-            toolbar.setTitle("アーティスト名(" + postName + ")");
+            toolbar.setTitle(getString(R.string.title__register__format__artist, postName));
             setSearchMusicTitleFastByArtistName(postName);
             setSearchMusicTitleByArtistName(postName);
         } else if (typeFlag == 1) {
-            toolbar.setTitle("曲名(" + postName + ")");
+            toolbar.setTitle(getString(R.string.title__register__format__music, postName));
             setSearchMusicTitleFastByMusicName(postName);
             setSearchMusicTitleByMusicName(postName);
         }
@@ -115,10 +115,9 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAll(musicTitleList);
-                adapter.notifyDataSetChanged();
+                adapter.addAllWithNotify(musicTitleList);
 
-                alertRegisterTextView.setText("登録する曲をタップしてください");
+                alertRegisterTextView.setText(R.string.text__register__tap_a_music);
             }
 
             @Override
@@ -132,8 +131,8 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAll(musicTitleList);
-                alertRegisterTextView.setText("登録する曲をタップしてください");
+                adapter.addAllWithNotify(musicTitleList);
+                alertRegisterTextView.setText(R.string.text__register__tap_a_music);
             }
 
             @Override
@@ -147,8 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAll(musicTitleList);
-                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+                adapter.addAllWithNotify(musicTitleList);
+                alertRegisterTextView.setText(R.string.text__register__tap_a_music_with_popular_order);
             }
 
             @Override
@@ -162,8 +161,8 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAll(musicTitleList);
-                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+                adapter.addAllWithNotify(musicTitleList);
+                alertRegisterTextView.setText(R.string.text__register__tap_a_music_with_popular_order);
             }
 
             @Override
@@ -213,7 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
                     useCase.apply(music, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
                         @Override
                         public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
-                            Snackbar.make(v, "登録しました", Snackbar.LENGTH_INDEFINITE).show();
+                            Snackbar.make(v, R.string.text__register__register_done, Snackbar.LENGTH_INDEFINITE).show();
                         }
                     }, new FailureCallback<RetrofitError>() {
                         @Override
