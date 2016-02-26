@@ -6,4 +6,26 @@
     <string name="title_activity_search_sang_music">SearchSangMusicActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_initial_use">InitialUseActivity</string>
+
+    <!-- hints -->
+
+    <string name="hint_artist_name">アーティスト名</string>
+    <string name="hint_room_name">ルーム名</string>
+    <string name="hint_user_name">ユーザ名</string>
+    <string name="hint_music_name">曲名</string>
+
+    <!-- menu strings -->
+
+    <string name="menu_leave_room">退室</string>
+    <string name="menu_register_one_sang_song">歌った曲を登録</string>
+    <string name="menu_reload">reload</string>
+
+    <!-- common text -->
+
+    <string name="text_please_tap_song">登録する曲をタップしてください\ \ 検索中&#8230;</string>
+    <string name="text_create_room">ルーム作成</string>
+    <string name="text_register">登録</string>
+    <string name="text_search">検索</string>
+    <string name="text_enter_room">ルーム入室</string>
+
 </resources>

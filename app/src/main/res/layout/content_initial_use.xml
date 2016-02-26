@@ -22,7 +22,7 @@
             android:id="@+id/userNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ユーザ名"
+            android:hint="@string/hint_user_name"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -37,7 +37,7 @@
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="登録"
+        android:text="@string/text_register"
         android:textColor="@color/colorWhite" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->

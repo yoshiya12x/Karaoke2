@@ -22,7 +22,7 @@
             android:id="@+id/artistSangEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="アーティスト名"
+            android:hint="@string/hint_artist_name"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -39,7 +39,7 @@
         android:focusableInTouchMode="true"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="検索"
+        android:text="@string/text_search"
         android:textColor="@color/colorWhite" />
 
     <android.support.design.widget.TextInputLayout
@@ -51,7 +51,7 @@
             android:id="@+id/musicSangEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="曲名"
+            android:hint=""
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -66,7 +66,7 @@
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="検索"
+        android:text="@string/text_search"
         android:textColor="@color/colorWhite" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->
