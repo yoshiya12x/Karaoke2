@@ -10,7 +10,7 @@
 *
 * */
 
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.presentation.activity.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.presentation.activity.registration.RegisterActivity;
 
 public class SearchSangMusicActivity extends AppCompatActivity {
 

@@ -1,5 +1,8 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.infra.api;
 
+import com.example.xjapan.karaoke2.infra.api.entity.MusicRecommend;
+import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
+import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

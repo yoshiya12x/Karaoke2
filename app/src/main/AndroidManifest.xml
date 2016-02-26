@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,19 +22,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SuggestionActivity"
+            android:name=".presentation.activity.suggestion.SuggestionActivity"
             android:label="@string/title_activity_suggestion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SearchSangMusicActivity"
+            android:name=".presentation.activity.search.SearchSangMusicActivity"
             android:label="@string/title_activity_search_sang_music"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".presentation.activity.registration.RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".InitialUseActivity"
+            android:name=".presentation.activity.initialization.InitialUseActivity"
             android:label="@string/title_activity_initial_use"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

@@ -1,4 +1,4 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.presentation.activity.registration;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.xjapan.karaoke2.infra.api.AppClient;
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
+import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.ViewHolder;
+import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 
 import java.util.ArrayList;
 import java.util.List;
