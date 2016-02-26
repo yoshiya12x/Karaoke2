@@ -12,32 +12,28 @@
 
 package com.example.xjapan.karaoke2.presentation.activity.initialization;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
-import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
-import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.initialization.CheckRegisteredUserUseCase;
 import com.example.xjapan.karaoke2.usecase.initialization.CreateUserUseCase;
 
-import retrofit.RetrofitError;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class InitialUseActivity extends AppCompatActivity {
 
-    private EditText nameEdit;
+    private static final String TAG = InitialUseActivity.class.getSimpleName();
 
-    public static Intent createIntent(Context context) {
-        return new Intent(context.getApplicationContext(), InitialUseActivity.class);
-    }
+    private EditText nameEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,28 +41,73 @@ public class InitialUseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_initial_use);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("登録画面");
+        toolbar.setTitle(R.string.title__initial_use__text__registration_display);
         setSupportActionBar(toolbar);
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        new CheckRegisteredUserUseCase().apply();
+    }
+
+    @Subscribe
+    public void onEvent(CheckRegisteredUserUseCase.OnExistEvent event) {
+        startActivity(MainActivity.createIntent(this));
+        finish();
+    }
+
+    @Subscribe
+    public void onEvent(CheckRegisteredUserUseCase.OnNotExistEvent event) {
         nameEdit = (EditText) findViewById(R.id.userNameEditText);
         Button userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
 
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CreateUserUseCase().applyAsync(nameEdit.getText().toString(), new SuccessCallback<RetrofitSuccessEvent<User>>() {
-                    @Override
-                    public void onSuccess(RetrofitSuccessEvent<User> success) {
-                        Intent intent = MainActivity.createIntent(InitialUseActivity.this);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, new FailureCallback<RetrofitError>() {
-                    @Override
-                    public void onFailure(RetrofitError error) {
-
-                    }
-                });
+                new CreateUserUseCase().apply(nameEdit.getText().toString());
             }
         });
+
+    }
+
+    @Subscribe
+    public void onEvent(CreateUserUseCase.OnCreatedUserEvent event) {
+        Intent intent = MainActivity.createIntent(this);
+        startActivity(intent);
+        finish();
+    }
+
+    @Subscribe
+    public void onEvent(CreateUserUseCase.OnCreateUserFailureEvent event) {
+        switch (event.getKind()) {
+            case Network:
+                Snackbar.make(nameEdit, R.string.error__usecase__create_user__network, Snackbar.LENGTH_SHORT).show();
+                break;
+            case DatabaseIO:
+                Snackbar.make(nameEdit, R.string.error__usecase__create_user__database_io, Snackbar.LENGTH_SHORT).show();
+                break;
+            case Unknown:
+                Snackbar.make(nameEdit, R.string.error__usecase__unknown, Snackbar.LENGTH_SHORT).show();
+                break;
+            default:
+                throw new AssertionError("No consistency in OnCreateUserFailureEvent");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        super.onPause();
     }
 }

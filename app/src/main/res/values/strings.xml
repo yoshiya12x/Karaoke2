@@ -8,6 +8,7 @@
     <string name="title_activity_initial_use">InitialUseActivity</string>
 
     <!-- toolbar titles -->
+    <string name="title__initial_use__text__registration_display">登録画面</string>
     <string name="title__register__format__artist">アーティスト(%1$s)</string>
     <string name="title__register__format__music">曲名(%1$s)</string>
 
@@ -35,6 +36,12 @@
     <string name="text__register__tap_a_music">登録する曲をタップしてください</string>
     <string name="text__register__tap_a_music_with_popular_order">登録する曲をタップしてください\ \ 人気順に変換中&#8230;</string>
     <string name="text__register__register_done">登録しました</string>
+
+    <!-- error strings -->
+
+    <string name="error__usecase__create_user__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__create_user__database_io">データの書き込みに失敗しました。</string>
+    <string name="error__usecase__unknown">原因不明のエラーが発生しました。\n時間を置いてリトライしてください。</string>
 
     <!-- format -->
 

@@ -58,14 +58,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (!new CheckRegisteredUserUseCase().apply()) {
-            Intent intent = InitialUseActivity.createIntent(this);
-            startActivity(intent);
-
-            finish();
-            return;
-        }
-
         EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
         sb = (SpannableStringBuilder) roomNameEditText.getText();
         Button roomInButton = (Button) findViewById(R.id.roomInButton);
