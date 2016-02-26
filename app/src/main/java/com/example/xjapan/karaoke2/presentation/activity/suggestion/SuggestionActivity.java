@@ -10,11 +10,11 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
+import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicRecommend;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.presentation.activity.search.SearchSangMusicActivity;
-import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
 
 import java.util.List;
 
@@ -91,9 +91,9 @@ public class SuggestionActivity extends AppCompatActivity {
     }
 
     public void invokeRoomOut() {
-        AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
+        AppClient.getService().roomOut(accountId, new Callback<User>() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
+            public void success(User successUserInfo, Response response) {
 
             }
 

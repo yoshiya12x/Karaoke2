@@ -23,11 +23,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
+import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
+import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.initialization.CreateUserUseCase;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -35,42 +39,40 @@ import retrofit.client.Response;
 
 public class InitialUseActivity extends AppCompatActivity {
 
-    private SpannableStringBuilder sb;
-    private Context context;
+    private EditText nameEdit;
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context.getApplicationContext(), InitialUseActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_use);
 
-        this.context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("登録画面");
         setSupportActionBar(toolbar);
-        EditText userNameEditText = (EditText) findViewById(R.id.userNameEditText);
-        sb = (SpannableStringBuilder) userNameEditText.getText();
+        nameEdit = (EditText) findViewById(R.id.userNameEditText);
         Button userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
+
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!sb.toString().equals("")) {
-                    AppClient.getService().getUserInfo(sb.toString(), new Callback<UserInfo>() {
-                        @Override
-                        public void success(UserInfo userInfo, Response response) {
-                            UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(userInfo.getAccountId(), sb.toString());
-                            Intent intent = new Intent(context, MainActivity.class);
-                            context.startActivity(intent);
-                        }
+                new CreateUserUseCase().applyAsync(nameEdit.getText().toString(), new SuccessCallback<RetrofitSuccessEvent<User>>() {
+                    @Override
+                    public void onSuccess(RetrofitSuccessEvent<User> success) {
+                        Intent intent = MainActivity.createIntent(InitialUseActivity.this);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, new FailureCallback<RetrofitError>() {
+                    @Override
+                    public void onFailure(RetrofitError error) {
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            Log.d("getUserInfo", error.toString());
-                        }
-                    });
-                }
+                    }
+                });
             }
         });
     }
-
 }

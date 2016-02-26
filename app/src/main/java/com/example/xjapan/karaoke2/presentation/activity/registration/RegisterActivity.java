@@ -28,8 +28,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
-import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;
@@ -58,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private MusicAdapter adapter;
 
     public static Intent createIntent(@NonNull Context context, int type, @NonNull String name) {
-        Intent intent = new Intent(context, RegisterActivity.class);
+        Intent intent = new Intent(context.getApplicationContext(), RegisterActivity.class);
         intent.putExtra(KEY_EXTRA_TYPE, type);
         intent.putExtra(KEY_EXTRA_NAME, name);
         return intent;
@@ -218,10 +217,10 @@ public class RegisterActivity extends AppCompatActivity {
             holder.body.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    RegisterMusicUseCase useCase = new RegisterMusicUseCase(new UserDB(getApplicationContext()));
-                    useCase.apply(music, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
+                    RegisterMusicUseCase useCase = new RegisterMusicUseCase();
+                    useCase.applyAsync(music, new SuccessCallback<RetrofitSuccessEvent<User>>() {
                         @Override
-                        public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
+                        public void onSuccess(RetrofitSuccessEvent<User> success) {
                             Snackbar.make(v, R.string.text__register__register_done, Snackbar.LENGTH_INDEFINITE).show();
                         }
                     }, new FailureCallback<RetrofitError>() {

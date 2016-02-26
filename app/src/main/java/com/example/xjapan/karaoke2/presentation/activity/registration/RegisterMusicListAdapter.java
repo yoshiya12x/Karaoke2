@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
-import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.ViewHolder;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 
@@ -74,9 +74,9 @@ public class RegisterMusicListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 ArrayList<String> userInfo = userDB.selectAll();
-                AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).getMusicId(), new Callback<UserInfo>() {
+                AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitleList.get(i).getMusicId(), new Callback<User>() {
                     @Override
-                    public void success(UserInfo userInfo, Response response) {
+                    public void success(User userInfo, Response response) {
                         Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
                     }
 

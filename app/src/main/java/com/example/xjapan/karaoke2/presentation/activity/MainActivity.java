@@ -20,6 +20,7 @@ package com.example.xjapan.karaoke2.presentation.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
@@ -31,9 +32,10 @@ import android.widget.Toast;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.initialization.InitialUseActivity;
 import com.example.xjapan.karaoke2.presentation.activity.suggestion.SuggestionActivity;
+import com.example.xjapan.karaoke2.usecase.initialization.CheckRegisteredUserUseCase;
 
 import java.util.ArrayList;
 
@@ -47,12 +49,25 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private ArrayList<String> userInfo;
 
+    public static Intent createIntent(@NonNull Context context) {
+        return new Intent(context.getApplicationContext(), MainActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (!new CheckRegisteredUserUseCase().apply()) {
+            Intent intent = InitialUseActivity.createIntent(this);
+            startActivity(intent);
+
+            finish();
+            return;
+        }
+
         UserDB userDB = new UserDB(this);
         userInfo = userDB.selectAll();
         //ユーザ登録情報が端末内に保存されていなければ初期画面に飛ばす
@@ -87,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void invokeRoomIn() {
-        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), sb.toString(), new Callback<UserInfo>() {
+        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), sb.toString(), new Callback<User>() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
+            public void success(User successUserInfo, Response response) {
                 Intent intent = new Intent(context, SuggestionActivity.class);
                 intent.putExtra("roomName", sb.toString());
                 intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
@@ -104,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void invokeCreateRoom() {
-        AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
+        AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<User>() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
+            public void success(User successUserInfo, Response response) {
                 Intent intent = new Intent(context, SuggestionActivity.class);
                 intent.putExtra("roomName", sb.toString());
                 intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));

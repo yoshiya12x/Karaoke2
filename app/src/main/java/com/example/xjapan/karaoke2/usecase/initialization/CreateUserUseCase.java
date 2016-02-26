@@ -1,7 +1,9 @@
-package com.example.xjapan.karaoke2.usecase.registration;
+package com.example.xjapan.karaoke2.usecase.initialization;
+
+import android.content.Intent;
+import android.util.Log;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.infra.db.dao.UserDAO;
 import com.example.xjapan.karaoke2.infra.db.entity.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
@@ -15,26 +17,22 @@ import retrofit.client.Response;
 /**
  * Created by jmatsu on 2016/02/27.
  */
-public class RegisterMusicUseCase {
-
+public class CreateUserUseCase {
     private final UserDAO dao = UserDAO.get();
 
-    public void applyAsync(MusicTitle music,
+    public void applyAsync(String name,
                       final SuccessCallback<RetrofitSuccessEvent<User>> sucCb,
                       final FailureCallback<RetrofitError> errCb) {
-        assert sucCb != null;
-        assert errCb != null;
-
-        User user = dao.findFirst();
-
-        assert user != null;
-
-        int userId = user.accountId;
-
-        AppClient.getService().register_sung_music(userId, music.getMusicId(), new Callback<User>() {
+        AppClient.getService().getUserInfo(name, new Callback<User>() {
             @Override
-            public void success(User userInfo, Response response) {
-                sucCb.onSuccess(new RetrofitSuccessEvent<>(userInfo, response));
+            public void success(User user, Response response) {
+                long id = dao.insert(user);
+
+                if (id > 0) {
+                    sucCb.onSuccess(new RetrofitSuccessEvent<>(user, response));
+                } else {
+                    // failure handle => EventBus // FIXME
+                }
             }
 
             @Override
