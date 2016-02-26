@@ -69,6 +69,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        assert getSupportActionBar() != null;
+
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.registerMusicListView);
@@ -78,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
         int space = getResources().getDimensionPixelSize(R.dimen.fab_margin);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
