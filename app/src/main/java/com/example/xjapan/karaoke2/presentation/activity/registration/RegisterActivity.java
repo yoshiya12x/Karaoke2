@@ -51,8 +51,18 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
+    private static final String KEY_EXTRA_TYPE = TAG + "type";
+    private static final String KEY_EXTRA_NAME = TAG + "name";
+
     private TextView alertRegisterTextView;
     private MusicAdapter adapter;
+
+    public static Intent createIntent(@NonNull Context context, int type, @NonNull String name) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        intent.putExtra(KEY_EXTRA_TYPE, type);
+        intent.putExtra(KEY_EXTRA_NAME, name);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +70,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Intent intent = getIntent();
-        int typeFlag = intent.getIntExtra("typeFlag", 2);
-        String postName = intent.getStringExtra("postName");
+        int typeFlag = intent.getIntExtra(KEY_EXTRA_TYPE, 2);
+        String postName = intent.getStringExtra(KEY_EXTRA_NAME);
+
+        assert postName != null;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

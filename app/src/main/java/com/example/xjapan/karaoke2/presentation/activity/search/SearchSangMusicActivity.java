@@ -48,11 +48,8 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SpannableStringBuilder sb = (SpannableStringBuilder) artistEditText.getText();
                 if (!sb.toString().equals("")) {
-                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                    //artist=0,music=1
-                    intent.putExtra("typeFlag", 0);
-                    intent.putExtra("postName", sb.toString());
-                    view.getContext().startActivity(intent);
+                    Intent intent = RegisterActivity.createIntent(getApplicationContext(), 0, sb.toString());
+                    startActivity(intent);
                 }
             }
         });
@@ -64,11 +61,8 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SpannableStringBuilder sb = (SpannableStringBuilder) musicEditText.getText();
                 if (!sb.toString().equals("")) {
-                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                    //artist=0,music=1
-                    intent.putExtra("typeFlag", 1);
-                    intent.putExtra("postName", sb.toString());
-                    view.getContext().startActivity(intent);
+                    Intent intent = RegisterActivity.createIntent(getApplicationContext(), 1, sb.toString());
+                    startActivity(intent);
                 }
             }
         });
