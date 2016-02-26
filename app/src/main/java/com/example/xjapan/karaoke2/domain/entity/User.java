@@ -1,4 +1,4 @@
-package com.example.xjapan.karaoke2.infra.db.entity;
+package com.example.xjapan.karaoke2.domain.entity;
 
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;

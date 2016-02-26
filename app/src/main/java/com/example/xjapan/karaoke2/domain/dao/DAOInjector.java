@@ -1,8 +1,8 @@
-package com.example.xjapan.karaoke2.infra.db.dao;
+package com.example.xjapan.karaoke2.domain.dao;
 
 import android.app.Application;
 
-import com.example.xjapan.karaoke2.infra.db.entity.OrmaDatabase;
+import com.example.xjapan.karaoke2.domain.entity.OrmaDatabase;
 import com.github.gfx.android.orma.AccessThreadConstraint;
 
 /**

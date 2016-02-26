@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.entity.User;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicRecommend;
 import com.example.xjapan.karaoke2.R;

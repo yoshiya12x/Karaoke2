@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.entity.User;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;

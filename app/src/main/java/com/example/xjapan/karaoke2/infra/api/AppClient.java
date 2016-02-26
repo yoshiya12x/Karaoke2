@@ -3,7 +3,7 @@ package com.example.xjapan.karaoke2.infra.api;
 import com.example.xjapan.karaoke2.BuildConfig;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicRecommend;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
-import com.example.xjapan.karaoke2.infra.db.entity.User;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

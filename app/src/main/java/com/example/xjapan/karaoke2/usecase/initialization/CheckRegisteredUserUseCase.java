@@ -1,6 +1,6 @@
 package com.example.xjapan.karaoke2.usecase.initialization;
 
-import com.example.xjapan.karaoke2.infra.db.dao.UserDAO;
+import com.example.xjapan.karaoke2.domain.dao.UserDAO;
 
 /**
  * Created by jmatsu on 2016/02/27.

@@ -2,8 +2,8 @@ package com.example.xjapan.karaoke2.usecase.registration;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
-import com.example.xjapan.karaoke2.infra.db.dao.UserDAO;
-import com.example.xjapan.karaoke2.infra.db.entity.User;
+import com.example.xjapan.karaoke2.domain.dao.UserDAO;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;

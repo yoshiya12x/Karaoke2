@@ -30,9 +30,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.db.entity.User;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.presentation.activity.initialization.InitialUseActivity;
 import com.example.xjapan.karaoke2.presentation.activity.suggestion.SuggestionActivity;
 import com.example.xjapan.karaoke2.usecase.initialization.CheckRegisteredUserUseCase;
@@ -46,8 +45,6 @@ import retrofit.client.Response;
 public class MainActivity extends AppCompatActivity {
 
     private SpannableStringBuilder sb;
-    private Context context;
-    private ArrayList<String> userInfo;
 
     public static Intent createIntent(@NonNull Context context) {
         return new Intent(context.getApplicationContext(), MainActivity.class);
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (!new CheckRegisteredUserUseCase().apply()) {
             Intent intent = InitialUseActivity.createIntent(this);
@@ -68,15 +66,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        UserDB userDB = new UserDB(this);
-        userInfo = userDB.selectAll();
-        //ユーザ登録情報が端末内に保存されていなければ初期画面に飛ばす
-        if (userInfo.size() == 0) {
-            Intent intentInitialUseActivity = new Intent(this, InitialUseActivity.class);
-            this.startActivity(intentInitialUseActivity);
-        }
-        context = this;
-        setSupportActionBar(toolbar);
         EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
         sb = (SpannableStringBuilder) roomNameEditText.getText();
         Button roomInButton = (Button) findViewById(R.id.roomInButton);
@@ -102,36 +91,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void invokeRoomIn() {
-        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), sb.toString(), new Callback<User>() {
-            @Override
-            public void success(User successUserInfo, Response response) {
-                Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", sb.toString());
-                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(context, "そのルームはありません", Toast.LENGTH_LONG).show();
-            }
-        });
+//        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), sb.toString(), new Callback<User>() {
+//            @Override
+//            public void success(User successUserInfo, Response response) {
+//                Intent intent = new Intent(context, SuggestionActivity.class);
+//                intent.putExtra("roomName", sb.toString());
+//                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
+//                context.startActivity(intent);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Toast.makeText(context, "そのルームはありません", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     public void invokeCreateRoom() {
-        AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<User>() {
-            @Override
-            public void success(User successUserInfo, Response response) {
-                Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", sb.toString());
-                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(context, "すでにそのルームはあります", Toast.LENGTH_LONG).show();
-            }
-        });
+//        AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<User>() {
+//            @Override
+//            public void success(User successUserInfo, Response response) {
+//                Intent intent = new Intent(context, SuggestionActivity.class);
+//                intent.putExtra("roomName", sb.toString());
+//                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Toast.makeText(context, "すでにそのルームはあります", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 }
