@@ -1,4 +1,4 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.infra.db.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

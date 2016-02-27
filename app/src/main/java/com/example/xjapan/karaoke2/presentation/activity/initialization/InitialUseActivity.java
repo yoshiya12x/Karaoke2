@@ -10,7 +10,7 @@
 *
 * */
 
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.presentation.activity.initialization;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
+import com.example.xjapan.karaoke2.infra.api.AppClient;
+import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

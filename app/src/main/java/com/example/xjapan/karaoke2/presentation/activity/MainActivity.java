@@ -15,7 +15,7 @@
 *
 * */
 
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.presentation.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.infra.db.dao.UserDB;
+import com.example.xjapan.karaoke2.infra.api.AppClient;
+import com.example.xjapan.karaoke2.infra.db.entity.UserInfo;
+import com.example.xjapan.karaoke2.presentation.activity.initialization.InitialUseActivity;
+import com.example.xjapan.karaoke2.presentation.activity.suggestion.SuggestionActivity;
 
 import java.util.ArrayList;
 

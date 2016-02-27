@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.xjapan.karaoke2.MainActivity"
+    tools:context=".presentation.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <android.support.design.widget.TextInputLayout
@@ -22,7 +22,7 @@
             android:id="@+id/roomNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ルーム名を入力"
+            android:hint="@string/hint_room_name"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -35,7 +35,7 @@
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="ルーム作成"
+        android:text="@string/text_create_room"
         android:textColor="@color/colorWhite" />
 
     <Button
@@ -46,7 +46,7 @@
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
-        android:text="ルーム入室"
+        android:text="@string/text_enter_room"
         android:textColor="@color/colorWhite" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->
