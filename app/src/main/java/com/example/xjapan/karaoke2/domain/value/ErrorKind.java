@@ -6,9 +6,13 @@ package com.example.xjapan.karaoke2.domain.value;
 public enum ErrorKind {
     Network,
 
+    Missing,
+
     FileIO,
 
     DatabaseIO,
 
-    Unknown
+    Unknown,
+
+    Fatal
 }

@@ -5,18 +5,13 @@ import com.example.xjapan.karaoke2.domain.value.ErrorKind;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
 import com.example.xjapan.karaoke2.domain.dao.UserDAO;
 import com.example.xjapan.karaoke2.domain.entity.User;
-import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
-import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
-import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by jmatsu on 2016/02/27.

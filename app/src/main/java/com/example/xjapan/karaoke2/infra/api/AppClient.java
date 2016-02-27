@@ -112,8 +112,8 @@ public class AppClient {
 
         @GET("/create_room")
         User createRoom(
-                @Query("room_name") String roomName,
-                @Query("user_id") int userId
+                @Query("user_id") int userId,
+                @Query("room_name") String roomName
         );
     }
 

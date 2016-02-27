@@ -1,11 +1,10 @@
-package com.example.xjapan.karaoke2.usecase.registration;
+package com.example.xjapan.karaoke2.usecase.suggestion;
 
+import com.example.xjapan.karaoke2.domain.dao.UserDAO;
+import com.example.xjapan.karaoke2.domain.entity.User;
 import com.example.xjapan.karaoke2.domain.event.ErrorEvent;
 import com.example.xjapan.karaoke2.domain.value.ErrorKind;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
-import com.example.xjapan.karaoke2.domain.dao.UserDAO;
-import com.example.xjapan.karaoke2.domain.entity.User;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -17,12 +16,11 @@ import retrofit.RetrofitError;
 /**
  * Created by jmatsu on 2016/02/27.
  */
-public class RegisterMusicUseCase {
-
+public class LeaveRoomUseCase {
     private final UserDAO dao = UserDAO.get();
     private final ExecutorService service = Executors.newSingleThreadExecutor();
 
-    public void apply(final MusicTitle music) {
+    public void apply() {
         service.submit(new Runnable() {
             @Override
             public void run() {
@@ -32,25 +30,28 @@ public class RegisterMusicUseCase {
                     int userId = user.accountId;
 
                     try {
-                        AppClient.sync().createSungMusic(userId, music.getMusicId()); // no response
-
-                        EventBus.getDefault().post(new OnCreatedSungMusicEvent());
+                        if (AppClient.sync().leaveRoom(userId) != null) {
+                            EventBus.getDefault().post(new LeavedRoomEvent());
+                        } else {
+                            EventBus.getDefault().post(new LeaveRoomFailureEvent(ErrorKind.Unknown));
+                        }
                     } catch (RetrofitError error) {
-                        EventBus.getDefault().post(new OnCreateSungMusicFailureEvent(ErrorKind.Network));
+                        EventBus.getDefault().post(new LeaveRoomFailureEvent(ErrorKind.Network));
                     }
                 } else {
-                    EventBus.getDefault().post(new OnCreateSungMusicFailureEvent(ErrorKind.DatabaseIO));
+                    EventBus.getDefault().post(new LeaveRoomFailureEvent(ErrorKind.DatabaseIO));
                 }
             }
         });
     }
 
-    public class OnCreatedSungMusicEvent {
+    public class LeavedRoomEvent {
 
     }
 
-    public class OnCreateSungMusicFailureEvent extends ErrorEvent {
-        public OnCreateSungMusicFailureEvent(ErrorKind kind) {
+    public class LeaveRoomFailureEvent extends ErrorEvent {
+
+        public LeaveRoomFailureEvent(ErrorKind kind) {
             super(kind);
         }
     }

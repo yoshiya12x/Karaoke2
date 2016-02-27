@@ -38,12 +38,25 @@
     <string name="text__register__register_done">登録しました</string>
 
     <!-- error strings -->
+    <string name="error__usecase__unknown">原因不明のエラーが発生しました。\n時間を置いてリトライしてください。</string>
 
     <string name="error__usecase__create_user__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
     <string name="error__usecase__create_user__database_io">データの書き込みに失敗しました。</string>
-    <string name="error__usecase__unknown">原因不明のエラーが発生しました。\n時間を置いてリトライしてください。</string>
 
+    <string name="error__usecase__create_sung_music__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__create_sung_music__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__create_room__network">通信中に問題が発生しました。\nすでにその部屋は作成された可能性があります。</string>
+    <string name="error__usecase__create_room__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__enter_room__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__enter_room__missing">そのルームはありません。</string>
+    <string name="error__usecase__enter_room__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__fetch_music_recommendations__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__fetch_music_recommendations__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
     <!-- format -->
 
     <string name="format_music_info">%1$s(%2$s)</string>
+    <string name="format_parentheses_wrap">(%1$s)</string>
 </resources>

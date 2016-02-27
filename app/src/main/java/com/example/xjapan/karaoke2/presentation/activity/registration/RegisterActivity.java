@@ -16,7 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,32 +28,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.xjapan.karaoke2.infra.api.AppClient;
-import com.example.xjapan.karaoke2.domain.entity.User;
-import com.example.xjapan.karaoke2.presentation.activity.MainActivity;
+import com.example.xjapan.karaoke2.presentation.activity.BaseActivity;
+import com.example.xjapan.karaoke2.presentation.activity.main.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.presentation.activity.search.SearchSangMusicActivity;
 import com.example.xjapan.karaoke2.presentation.common.adapter.ArrayRecyclerAdapter;
 import com.example.xjapan.karaoke2.presentation.common.decoration.SpaceItemDecoration;
-import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
-import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
-import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
 import com.example.xjapan.karaoke2.usecase.registration.RegisterMusicUseCase;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private static final String KEY_EXTRA_TYPE = TAG + "type";
     private static final String KEY_EXTRA_NAME = TAG + "name";
 
-    private TextView alertRegisterTextView;
+    @Bind(R.id.alertRegister)
+    TextView alertRegisterTextView;
+
     private MusicAdapter adapter;
 
     public static Intent createIntent(@NonNull Context context, int type, @NonNull String name) {
@@ -67,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra(KEY_EXTRA_TYPE, 2);
@@ -81,13 +85,11 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.registerMusicListView);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter = new MusicAdapter(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int space = getResources().getDimensionPixelSize(R.dimen.fab_margin);
+        int space = getResources().getDimensionPixelSize(R.dimen.margin_between_cards);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
 
@@ -118,6 +120,25 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Subscribe
+    public void onEvent(RegisterMusicUseCase.OnCreatedSungMusicEvent event) {
+        Snackbar.make(alertRegisterTextView, R.string.text__register__register_done, Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    @Subscribe
+    public void onEvent(RegisterMusicUseCase.OnCreateSungMusicFailureEvent event) {
+        switch (event.getKind()) {
+            case Network:
+                showErrorSnack(alertRegisterTextView, R.string.error__usecase__create_sung_music__network);
+                break;
+            case DatabaseIO:
+                showErrorSnack(alertRegisterTextView, R.string.error__usecase__create_sung_music__database_io);
+                break;
+            default:
+                throw new AssertionError("No consistency in OnCreateSungMusicFailureEvent");
+        }
     }
 
     public void setSearchMusicTitleByArtistName(String postName) {
@@ -181,18 +202,29 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private class MusicViewHolder extends RecyclerView.ViewHolder {
-        private TextView musicNameText;
-        private View body;
+    static class MusicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @Bind(R.id.card_view)
+        CardView cardView;
+
+        @Bind(R.id.text_music_name)
+        TextView musicNameText;
+
+        @Bind(R.id.text_artist_name)
+        TextView artistNameText;
+
+        MusicTitle music;
 
         public MusicViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
 
-            body = itemView.findViewById(R.id.register_music_linear_layout);
-            musicNameText = (TextView) itemView.findViewById(R.id.sear_music_name);
+        @Override
+        public void onClick(View v) {
+            assert music != null;
 
-            assert body != null;
-            assert musicNameText != null;
+            new RegisterMusicUseCase().apply(music);
         }
     }
 
@@ -204,33 +236,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public MusicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MusicViewHolder(LayoutInflater.from(RegisterActivity.this).inflate(R.layout.search_music_list_item, parent, false));
+            return new MusicViewHolder(LayoutInflater.from(RegisterActivity.this).inflate(R.layout.row_music, parent, false));
         }
 
         @Override
         public void onBindViewHolder(MusicViewHolder holder, int position) {
-            final MusicTitle music = get(position);
+            MusicTitle music = get(position);
 
-            String name = getString(R.string.format_music_info, music.getTitle(), music.getArtist());
-            holder.musicNameText.setText(name);
-
-            holder.body.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    RegisterMusicUseCase useCase = new RegisterMusicUseCase();
-                    useCase.applyAsync(music, new SuccessCallback<RetrofitSuccessEvent<User>>() {
-                        @Override
-                        public void onSuccess(RetrofitSuccessEvent<User> success) {
-                            Snackbar.make(v, R.string.text__register__register_done, Snackbar.LENGTH_INDEFINITE).show();
-                        }
-                    }, new FailureCallback<RetrofitError>() {
-                        @Override
-                        public void onFailure(RetrofitError error) {
-                            Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
-                        }
-                    });
-                }
-            });
+            holder.music = music;
+            holder.musicNameText.setText(music.getTitle());
+            holder.artistNameText.setText(getString(R.string.format_parentheses_wrap, music.getArtist()));
+            holder.cardView.setOnClickListener(holder);
         }
     }
 }
