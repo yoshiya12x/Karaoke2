@@ -27,16 +27,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.xjapan.karaoke2.domain.value.Paging;
 import com.example.xjapan.karaoke2.infra.api.AppClient;
 import com.example.xjapan.karaoke2.presentation.activity.BaseActivity;
 import com.example.xjapan.karaoke2.presentation.activity.main.MainActivity;
 import com.example.xjapan.karaoke2.infra.api.entity.MusicTitle;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.presentation.activity.search.SearchSangMusicActivity;
+import com.example.xjapan.karaoke2.presentation.activity.search.SearchType;
 import com.example.xjapan.karaoke2.presentation.common.adapter.ArrayRecyclerAdapter;
 import com.example.xjapan.karaoke2.presentation.common.decoration.SpaceItemDecoration;
+import com.example.xjapan.karaoke2.usecase.registration.FetchMusicTitlesByArtistNameUseCase;
+import com.example.xjapan.karaoke2.usecase.registration.FetchMusicTitlesByMusicNameUseCase;
+import com.example.xjapan.karaoke2.usecase.registration.FetchMusicTitlesUseCase;
 import com.example.xjapan.karaoke2.usecase.registration.RegisterMusicUseCase;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
@@ -54,12 +60,15 @@ public class RegisterActivity extends BaseActivity {
     private static final String KEY_EXTRA_TYPE = TAG + "type";
     private static final String KEY_EXTRA_NAME = TAG + "name";
 
+    private static final Paging INITIAL_PAGE = new Paging(30);
+
     @Bind(R.id.alertRegister)
     TextView alertRegisterTextView;
 
+    private Paging paging = INITIAL_PAGE;
     private MusicAdapter adapter;
 
-    public static Intent createIntent(@NonNull Context context, int type, @NonNull String name) {
+    public static Intent createIntent(@NonNull Context context, SearchType type, @NonNull String name) {
         Intent intent = new Intent(context.getApplicationContext(), RegisterActivity.class);
         intent.putExtra(KEY_EXTRA_TYPE, type);
         intent.putExtra(KEY_EXTRA_NAME, name);
@@ -67,59 +76,77 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
+    protected int getContentLayoutId() {
+        return R.layout.activity_register;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        int typeFlag = intent.getIntExtra(KEY_EXTRA_TYPE, 2);
+
+        SearchType type = (SearchType) intent.getSerializableExtra(KEY_EXTRA_TYPE);
         String postName = intent.getStringExtra(KEY_EXTRA_NAME);
 
+        assert type != null;
         assert postName != null;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar);
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = ButterKnife.findById(this, R.id.recycler_view);
         recyclerView.setAdapter(adapter = new MusicAdapter(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         int space = getResources().getDimensionPixelSize(R.dimen.margin_between_cards);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
 
-
-        if (typeFlag == 0) {
-            toolbar.setTitle(getString(R.string.title__register__format__artist, postName));
-            setSearchMusicTitleFastByArtistName(postName);
-            setSearchMusicTitleByArtistName(postName);
-        } else if (typeFlag == 1) {
-            toolbar.setTitle(getString(R.string.title__register__format__music, postName));
-            setSearchMusicTitleFastByMusicName(postName);
-            setSearchMusicTitleByMusicName(postName);
-        }
+        toolbar.setTitle(getString(type.getId(), postName));
+        EventBus.getDefault().post(type.getEvent(postName));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_sang_music) {
-            Intent intent = new Intent(this, SearchSangMusicActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.action_logout) {
-            Intent intent = new Intent(this, MainActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == android.R.id.home) {
-            finish();
-            return true;
+    @Subscribe
+    public void onEvent(SearchType.MusicTriggerEvent event) {
+        new FetchMusicTitlesByMusicNameUseCase().apply(event.getQuery(), paging);
+        paging = paging.next();
+    }
+
+    @Subscribe
+    public void onEvent(SearchType.ArtistTriggerEvent event) {
+        new FetchMusicTitlesByArtistNameUseCase().apply(event.getQuery(), paging);
+        paging = paging.next();
+    }
+
+    @Subscribe
+    public void onEvent(FetchMusicTitlesUseCase.OnFetchedMusicTitlesEvent event) {
+        adapter.addAll(event.getMusics());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+                alertRegisterTextView.setText(R.string.text__register__tap_a_music);
+            }
+        });
+    }
+
+    @Subscribe
+    public void onEvent(FetchMusicTitlesUseCase.OnFetchMusicTitlesFailureEvent event) {
+        switch (event.getKind()) {
+            case Network:
+                showErrorSnack(alertRegisterTextView, R.string.error__usecase__fetch_music_titles__network);
+                break;
+            case Unknown:
+                showErrorSnack(alertRegisterTextView, R.string.error__usecase__unknown);
+                break;
+            default:
+                throw new AssertionError("No consistency in OnFetchMusicTitlesFailureEvent");
         }
-        return false;
     }
 
     @Subscribe
@@ -139,67 +166,6 @@ public class RegisterActivity extends BaseActivity {
             default:
                 throw new AssertionError("No consistency in OnCreateSungMusicFailureEvent");
         }
-    }
-
-    public void setSearchMusicTitleByArtistName(String postName) {
-        AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAllWithNotify(musicTitleList);
-
-                alertRegisterTextView.setText(R.string.text__register__tap_a_music);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
-    }
-
-    public void setSearchMusicTitleByMusicName(String postName) {
-        AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAllWithNotify(musicTitleList);
-                alertRegisterTextView.setText(R.string.text__register__tap_a_music);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
-    }
-
-    public void setSearchMusicTitleFastByArtistName(String postName) {
-        AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAllWithNotify(musicTitleList);
-                alertRegisterTextView.setText(R.string.text__register__tap_a_music_with_popular_order);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
-    }
-
-    public void setSearchMusicTitleFastByMusicName(String postName) {
-        AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                adapter.addAllWithNotify(musicTitleList);
-                alertRegisterTextView.setText(R.string.text__register__tap_a_music_with_popular_order);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
     }
 
     static class MusicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

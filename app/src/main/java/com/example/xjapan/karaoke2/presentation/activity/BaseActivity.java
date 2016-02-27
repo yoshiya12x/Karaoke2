@@ -12,10 +12,24 @@ import com.example.xjapan.karaoke2.R;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by jmatsu on 2016/02/27.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getContentLayoutId());
+        ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    protected abstract int getContentLayoutId();
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

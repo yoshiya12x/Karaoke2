@@ -38,19 +38,18 @@ public class InitialUseActivity extends BaseActivity {
     EditText nameEdit;
 
     @Override
+    protected int getContentLayoutId() {
+        return R.layout.activity_initial_use;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_use);
-        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title__initial_use__text__registration_display);
         setSupportActionBar(toolbar);
-    }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         new CheckRegisteredUserUseCase().apply();
     }
 

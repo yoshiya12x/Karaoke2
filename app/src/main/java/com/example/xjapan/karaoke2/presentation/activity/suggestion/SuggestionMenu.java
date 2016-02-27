@@ -12,6 +12,7 @@ public enum SuggestionMenu {
     Home(android.R.id.home) {
         @Override
         public boolean doAction(@NonNull SuggestionActivity activity) {
+            activity.leave();
             activity.finish();
             return true;
         }

@@ -55,6 +55,8 @@
 
     <string name="error__usecase__fetch_music_recommendations__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
     <string name="error__usecase__fetch_music_recommendations__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__fetch_music_titles__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
     <!-- format -->
 
     <string name="format_music_info">%1$s(%2$s)</string>

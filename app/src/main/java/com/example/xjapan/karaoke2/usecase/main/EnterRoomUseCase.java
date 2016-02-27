@@ -30,13 +30,15 @@ public class EnterRoomUseCase {
                     int userId = user.accountId;
 
                     try {
-                        if (AppClient.sync().enterRoom(userId, name) != null) {
-                            EventBus.getDefault().post(new OnEnteredRoomEvent(name));
-                        } else {
-                            EventBus.getDefault().post(new OnEnterRoomFailureEvent(ErrorKind.Unknown));
-                        }
+                        AppClient.sync().enterRoom(userId, name);
+
+                        EventBus.getDefault().post(new OnEnteredRoomEvent(name));
                     } catch (RetrofitError error) {
-                        EventBus.getDefault().post(new OnEnterRoomFailureEvent(ErrorKind.Missing));
+                        if (error.getResponse().getStatus() == 404) {
+                            EventBus.getDefault().post(new OnEnterRoomFailureEvent(ErrorKind.Missing));
+                        } else {
+                            EventBus.getDefault().post(new OnEnterRoomFailureEvent(ErrorKind.Network));
+                        }
                     }
                 } else {
                     EventBus.getDefault().post(new OnEnterRoomFailureEvent(ErrorKind.DatabaseIO));

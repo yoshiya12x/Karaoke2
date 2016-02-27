@@ -55,27 +55,26 @@ public class SuggestionActivity extends BaseActivity {
     }
 
     @Override
+    protected int getContentLayoutId() {
+        return R.layout.activity_suggestion;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestion);
-        ButterKnife.bind(this);
 
         Intent intent = getIntent();
 
         toolbar.setTitle(intent.getStringExtra(KEY_ROOM_NAME));
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = ButterKnife.findById(this, R.id.recycler_view);
         recyclerView.setAdapter(adapter = new MusicAdapter(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         int space = getResources().getDimensionPixelSize(R.dimen.margin_between_cards);
         recyclerView.addItemDecoration(new SpaceItemDecoration(space));
-    }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         new FetchMusicRecommendationsUseCase().apply();
     }
 
@@ -119,10 +118,12 @@ public class SuggestionActivity extends BaseActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(LeaveRoomUseCase.LeavedRoomEvent event) {
         finish();
     }
 
+    @Subscribe
     public void onEvent(LeaveRoomUseCase.LeaveRoomFailureEvent event) {
         switch (event.getKind()) {
             case Network:
@@ -137,6 +138,13 @@ public class SuggestionActivity extends BaseActivity {
             default:
                 throw new AssertionError("No consistency in OnCreateUserFailureEvent");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        SuggestionMenu.Leave.doAction(this);
+
+        super.onBackPressed();
     }
 
     @Override

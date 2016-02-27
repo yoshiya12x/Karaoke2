@@ -77,15 +77,15 @@ public class AppClient {
         @GET("/search_music_title_ranged")
         List<MusicTitle> fetchMusicTitlesByMusicName(
                 @Query("music_name") String musicName,
-                @Query("page_length") int length,
-                @Query("page_number") int number
+                @Query("page_number") int number,
+                @Query("page_length") int limit
         );
 
         @GET("/search_music_artist_ranged")
         List<MusicTitle> fetchMusicTitlesByArtistName(
                 @Query("artist_name") String artistName,
-                @Query("page_length") int length,
-                @Query("page_number") int number
+                @Query("page_number") int number,
+                @Query("page_length") int limit
         );
 
         @GET("/account")
