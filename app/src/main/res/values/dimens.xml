@@ -4,4 +4,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="search_button_margin">40dp</dimen>
+
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+
+    <dimen name="margin_between_cards">12dp</dimen>
+    <dimen name="margin_around_card">6dp</dimen>
+    <dimen name="padding_in_card">12dp</dimen>
 </resources>

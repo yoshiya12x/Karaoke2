@@ -9,4 +9,6 @@
     <color name="colorBlack">#000000</color>
     <!--<color name="colorEditTextSub">#F78989</color>-->
     <!--<color name="colorDarkGray">#A9A9A9</color>-->
+
+    <color name="red_A700">#d50000</color>
 </resources>

@@ -6,4 +6,59 @@
     <string name="title_activity_search_sang_music">SearchSangMusicActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_initial_use">InitialUseActivity</string>
+
+    <!-- toolbar titles -->
+    <string name="title__initial_use__text__registration_display">登録画面</string>
+    <string name="title__register__format__artist">アーティスト(%1$s)</string>
+    <string name="title__register__format__music">曲名(%1$s)</string>
+
+    <!-- hints -->
+
+    <string name="hint_artist_name">アーティスト名</string>
+    <string name="hint_room_name">ルーム名</string>
+    <string name="hint_user_name">ユーザ名</string>
+    <string name="hint_music_name">曲名</string>
+
+    <!-- menu strings -->
+
+    <string name="menu_leave_room">退室</string>
+    <string name="menu_register_one_sang_song">歌った曲を登録</string>
+    <string name="menu_reload">reload</string>
+
+    <!-- common text -->
+
+    <string name="text_please_tap_song">登録する曲をタップしてください\ \ 検索中&#8230;</string>
+    <string name="text_create_room">ルーム作成</string>
+    <string name="text_register">登録</string>
+    <string name="text_search">検索</string>
+    <string name="text_enter_room">ルーム入室</string>
+
+    <string name="text__register__tap_a_music">登録する曲をタップしてください</string>
+    <string name="text__register__tap_a_music_with_popular_order">登録する曲をタップしてください\ \ 人気順に変換中&#8230;</string>
+    <string name="text__register__register_done">登録しました</string>
+
+    <!-- error strings -->
+    <string name="error__usecase__unknown">原因不明のエラーが発生しました。\n時間を置いてリトライしてください。</string>
+
+    <string name="error__usecase__create_user__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__create_user__database_io">データの書き込みに失敗しました。</string>
+
+    <string name="error__usecase__create_sung_music__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__create_sung_music__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__create_room__network">通信中に問題が発生しました。\nすでにその部屋は作成された可能性があります。</string>
+    <string name="error__usecase__create_room__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__enter_room__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__enter_room__missing">そのルームはありません。</string>
+    <string name="error__usecase__enter_room__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__fetch_music_recommendations__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <string name="error__usecase__fetch_music_recommendations__database_io">データの読み込みに失敗した可能性があります。\nお手数ですがもう一度操作してください。</string>
+
+    <string name="error__usecase__fetch_music_titles__network">通信中に問題が発生しました。\n時間を置いてリトライしてください。</string>
+    <!-- format -->
+
+    <string name="format_music_info">%1$s(%2$s)</string>
+    <string name="format_parentheses_wrap">(%1$s)</string>
 </resources>

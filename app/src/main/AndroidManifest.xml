@@ -6,14 +6,31 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
+        android:name=".Karaoke2"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.activity.main.MainActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.activity.suggestion.SuggestionActivity"
+            android:label="@string/title_activity_suggestion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.activity.search.SearchSangMusicActivity"
+            android:label="@string/title_activity_search_sang_music"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.activity.registration.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.activity.initialization.InitialUseActivity"
+            android:label="@string/title_activity_initial_use"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,22 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SuggestionActivity"
-            android:label="@string/title_activity_suggestion"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SearchSangMusicActivity"
-            android:label="@string/title_activity_search_sang_music"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".InitialUseActivity"
-            android:label="@string/title_activity_initial_use"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.xjapan.karaoke2.MainActivity">
+    tools:context=".presentation.activity.main.MainActivity">
     <!--<item-->
     <!--android:id="@+id/action_want_music"-->
     <!--android:orderInCategory="100"-->
@@ -10,18 +10,18 @@
     <item
         android:id="@+id/action_sang_music"
         android:orderInCategory="100"
-        android:title="歌った曲を登録"
+        android:title="@string/menu_register_one_sang_song"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:title="退室"
+        android:title="@string/menu_leave_room"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_reload"
         android:icon="@drawable/reload"
         android:orderInCategory="102"
-        android:title="reload"
+        android:title="@string/menu_reload"
         app:showAsAction="ifRoom" />
 </menu>
