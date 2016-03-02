@@ -1,5 +1,6 @@
 package com.example.xjapan.karaoke2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,7 @@ public class SuggestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestion);
 
         Intent intent = getIntent();
-        accountId = intent.getIntExtra("account_id", 0);
+        accountId = intent.getIntExtra("accountId", 0);
         setToolbar(intent.getStringExtra("roomName"));
 
         musicListView = (ListView) findViewById(R.id.suggetionMusicListView);
@@ -48,13 +49,11 @@ public class SuggestionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_sang_music) {
-            Intent intent = new Intent(this, SearchSangMusicActivity.class);
-            this.startActivity(intent);
+            SuggestionActivity.this.startActivity(SearchSangMusicActivity.createIntent(SuggestionActivity.this));
             return true;
         } else if (id == R.id.action_logout) {
             invokeRoomOut();
-            Intent intent = new Intent(this, MainActivity.class);
-            this.startActivity(intent);
+            SuggestionActivity.this.startActivity(MainActivity.createIntent(SuggestionActivity.this));
             return true;
         } else if (id == android.R.id.home) {
             finish();
@@ -105,5 +104,12 @@ public class SuggestionActivity extends AppCompatActivity {
                 Log.d("musicRecommendList_test", error.toString());
             }
         });
+    }
+
+    public static Intent createIntent(Context context, String roomName, int accountId) {
+        Intent intent = new Intent(context.getApplicationContext(), SuggestionActivity.class);
+        intent.putExtra("roomName", roomName);
+        intent.putExtra("accountId", accountId);
+        return intent;
     }
 }

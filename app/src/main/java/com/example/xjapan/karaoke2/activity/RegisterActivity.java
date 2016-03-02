@@ -148,4 +148,11 @@ public class RegisterActivity extends AppCompatActivity {
         registerMusicListView.setAdapter(registerMusicListAdapter);
         alertRegisterTextView.setText(alertText);
     }
+
+    public static Intent createIntent(Context context, int typeFlag, String postName) {
+        Intent intent = new Intent(context.getApplicationContext(), RegisterActivity.class);
+        intent.putExtra("typeFlag", typeFlag);
+        intent.putExtra("postName", postName);
+        return intent;
+    }
 }

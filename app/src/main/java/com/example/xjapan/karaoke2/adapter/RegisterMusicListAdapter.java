@@ -29,15 +29,13 @@ import retrofit.client.Response;
  */
 public class RegisterMusicListAdapter extends ArrayAdapter<MusicTitle> {
 
-    private Context context;
     private UserDB userDB;
     private LayoutInflater inflater;
 
     public RegisterMusicListAdapter(Context context, int resourceId, List<MusicTitle> musicTitleList) {
         super(context, resourceId, musicTitleList);
-        this.context = context;
-        this.userDB = new UserDB(context);
-        this.inflater = LayoutInflater.from(context);
+        this.userDB = new UserDB(getContext());
+        this.inflater = LayoutInflater.from(getContext());
     }
 
     @Override
@@ -61,7 +59,7 @@ public class RegisterMusicListAdapter extends ArrayAdapter<MusicTitle> {
                 AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), getItem(i).getMusicId(), new Callback<UserInfo>() {
                     @Override
                     public void success(UserInfo userInfo, Response response) {
-                        Toast.makeText(context, "登録しました", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "登録しました", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

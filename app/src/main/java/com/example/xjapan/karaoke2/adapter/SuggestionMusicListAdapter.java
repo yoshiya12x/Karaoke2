@@ -22,7 +22,7 @@ public class SuggestionMusicListAdapter extends ArrayAdapter<MusicRecommend> {
 
     public SuggestionMusicListAdapter(Context context, int resourceId, List<MusicRecommend> musicRecommendList) {
         super(context, resourceId, musicRecommendList);
-        this.inflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(getContext());
     }
 
     @Override

@@ -42,7 +42,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String artistName = artistEditText.getText().toString();
                 if (!artistName.isEmpty()) {
-                    view.getContext().startActivity(createIntent(view.getContext(), 0, artistName));
+                    SearchSangMusicActivity.this.startActivity(RegisterActivity.createIntent(SearchSangMusicActivity.this, 0, artistName));
                 }
             }
         });
@@ -54,7 +54,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String musicName = musicEditText.getText().toString();
                 if (!musicName.isEmpty()) {
-                    view.getContext().startActivity(createIntent(view.getContext(), 1, musicName));
+                    SearchSangMusicActivity.this.startActivity(RegisterActivity.createIntent(SearchSangMusicActivity.this, 1, musicName));
                 }
             }
         });
@@ -86,15 +86,8 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    public Intent createIntent(Context context, int typeFlag, String postName) {
-        if (!postName.isEmpty()) {
-            Intent intent = new Intent(context, RegisterActivity.class);
-            //artist=0,music=1
-            intent.putExtra("typeFlag", typeFlag);
-            intent.putExtra("postName", postName);
-            context.startActivity(intent);
-            return intent;
-        }
-        return null;
+    public static Intent createIntent(Context context) {
+        Intent intent = new Intent(context.getApplicationContext(), SearchSangMusicActivity.class);
+        return intent;
     }
 }
