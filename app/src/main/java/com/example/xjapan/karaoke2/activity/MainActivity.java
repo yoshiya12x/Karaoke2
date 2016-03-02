@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         roomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!roomName.equals("")) {
+                if (!roomName.isEmpty()) {
                     invokeRoomIn();
                 }
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         roomCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!roomName.equals("")) {
+                if (!roomName.isEmpty()) {
                     invokeCreateRoom();
                 }
             }

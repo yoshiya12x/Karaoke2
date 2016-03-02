@@ -48,7 +48,7 @@ public class InitialUseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userName = userNameEditText.getText().toString();
-                if (!userName.equals("")) {
+                if (!userName.isEmpty()) {
                     AppClient.getService().getUserInfo(userName, new Callback<UserInfo>() {
                         @Override
                         public void success(UserInfo userInfo, Response response) {

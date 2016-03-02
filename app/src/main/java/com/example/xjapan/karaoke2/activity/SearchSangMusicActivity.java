@@ -44,7 +44,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String artistName = artistEditText.getText().toString();
-                if (!artistName.equals("")) {
+                if (!artistName.isEmpty()) {
                     Intent intent = new Intent(view.getContext(), RegisterActivity.class);
                     //artist=0,music=1
                     intent.putExtra("typeFlag", 0);
@@ -60,7 +60,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String musicName = musicEditText.getText().toString();
-                if (!musicName.equals("")) {
+                if (!musicName.isEmpty()) {
                     Intent intent = new Intent(view.getContext(), RegisterActivity.class);
                     //artist=0,music=1
                     intent.putExtra("typeFlag", 1);
