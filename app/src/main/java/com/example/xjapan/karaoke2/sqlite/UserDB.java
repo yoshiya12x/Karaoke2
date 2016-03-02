@@ -1,9 +1,11 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.xjapan.karaoke2.sqlite.SQLiteHelper;
 
 import java.util.ArrayList;
 

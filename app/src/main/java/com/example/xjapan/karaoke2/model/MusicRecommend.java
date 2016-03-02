@@ -1,11 +1,10 @@
-package com.example.xjapan.karaoke2;
-
-import java.io.Serializable;
+package com.example.xjapan.karaoke2.model;
 
 /**
  * Created by xjapan on 16/02/24.
  */
-public class MusicTitle implements Serializable {
+public class MusicRecommend {
+
     private int music_id;
     private String artist;
     private String title;

@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.xjapan.karaoke2.SearchSangMusicActivity"
+    tools:context=".activity.SearchSangMusicActivity"
     tools:showIn="@layout/activity_search_sang_music">
 
     <android.support.design.widget.TextInputLayout
@@ -35,8 +35,6 @@
         android:layout_below="@+id/textInputLayout"
         android:layout_centerInParent="true"
         android:background="@drawable/button"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
         android:text="検索"

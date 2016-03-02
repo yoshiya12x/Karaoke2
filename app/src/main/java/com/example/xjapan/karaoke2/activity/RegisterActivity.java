@@ -9,7 +9,7 @@
 *
 * */
 
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.xjapan.karaoke2.util.AppClient;
+import com.example.xjapan.karaoke2.model.MusicTitle;
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.adapter.RegisterMusicListAdapter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     static final String DatabaseName = "KaraokeDB";
-    static final int DatabaseVersion = 22;
+    static final int DatabaseVersion = 23;
 
     public SQLiteHelper(Context mContext) {
         super(mContext, DatabaseName, null, DatabaseVersion);

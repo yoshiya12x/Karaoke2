@@ -1,4 +1,4 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.model;
 
 import java.io.Serializable;
 

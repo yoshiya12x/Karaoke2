@@ -1,5 +1,8 @@
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.util;
 
+import com.example.xjapan.karaoke2.model.MusicRecommend;
+import com.example.xjapan.karaoke2.model.MusicTitle;
+import com.example.xjapan.karaoke2.model.UserInfo;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +22,7 @@ import retrofit.http.Query;
  */
 public class AppClient {
 
-    private String END_POINT = "http://musicrecommender.herokuapp.com";
+    private static final String END_POINT = "http://musicrecommender.herokuapp.com";
     private static AppClient sInstance = new AppClient();
     private AppService service;
 

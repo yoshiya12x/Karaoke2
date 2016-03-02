@@ -15,7 +15,7 @@
 *
 * */
 
-package com.example.xjapan.karaoke2;
+package com.example.xjapan.karaoke2.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.xjapan.karaoke2.util.AppClient;
+import com.example.xjapan.karaoke2.R;
+import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.model.UserInfo;
 
 import java.util.ArrayList;
 
@@ -50,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         userInfo = userDB.selectAll();
         //ユーザ登録情報が端末内に保存されていなければ初期画面に飛ばす
         if (userInfo.size() == 0) {
-            Intent intentInitialUseActivity = new Intent(this, InitialUseActivity.class);
-            this.startActivity(intentInitialUseActivity);
+            Intent intentInitialUseActivity = new Intent(getApplicationContext(), InitialUseActivity.class);
+            startActivity(intentInitialUseActivity);
         }
         context = this;
         setSupportActionBar(toolbar);
