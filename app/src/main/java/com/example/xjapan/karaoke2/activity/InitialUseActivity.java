@@ -16,16 +16,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.xjapan.karaoke2.util.AppClient;
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
 import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.util.AppClient;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,7 +32,7 @@ import retrofit.client.Response;
 
 public class InitialUseActivity extends AppCompatActivity {
 
-    private SpannableStringBuilder sb;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +47,13 @@ public class InitialUseActivity extends AppCompatActivity {
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sb = (SpannableStringBuilder) userNameEditText.getText();
-                if (!sb.toString().equals("")) {
-                    AppClient.getService().getUserInfo(sb.toString(), new Callback<UserInfo>() {
+                userName = userNameEditText.getText().toString();
+                if (!userName.equals("")) {
+                    AppClient.getService().getUserInfo(userName, new Callback<UserInfo>() {
                         @Override
                         public void success(UserInfo userInfo, Response response) {
                             UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(userInfo.getAccountId(), sb.toString());
+                            userDB.insertAll(userInfo.getAccountId(), userName);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }

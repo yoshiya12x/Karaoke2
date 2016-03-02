@@ -9,11 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.xjapan.karaoke2.util.AppClient;
-import com.example.xjapan.karaoke2.model.MusicRecommend;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.SuggestionMusicListAdapter;
+import com.example.xjapan.karaoke2.model.MusicRecommend;
 import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.util.AppClient;
 
 import java.util.List;
 

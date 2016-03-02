@@ -22,16 +22,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.xjapan.karaoke2.util.AppClient;
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
 import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.util.AppClient;
 
 import java.util.ArrayList;
 
@@ -41,9 +40,9 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SpannableStringBuilder sb;
     private Context context;
     private ArrayList<String> userInfo;
+    private String roomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setSupportActionBar(toolbar);
         EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
-        sb = (SpannableStringBuilder) roomNameEditText.getText();
+        roomName = roomNameEditText.getText().toString();
         Button roomInButton = (Button) findViewById(R.id.roomInButton);
         roomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!sb.toString().equals("")) {
+                if (!roomName.equals("")) {
                     invokeRoomIn();
                 }
 
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         roomCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!sb.toString().equals("")) {
+                if (!roomName.equals("")) {
                     invokeCreateRoom();
                 }
             }
@@ -85,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void invokeRoomIn() {
-        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), sb.toString(), new Callback<UserInfo>() {
+        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), roomName, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
                 Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", sb.toString());
+                intent.putExtra("roomName", roomName);
                 intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
                 context.startActivity(intent);
             }
@@ -102,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void invokeCreateRoom() {
-        AppClient.getService().createRoom(sb.toString(), Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
+        AppClient.getService().createRoom(roomName, Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
                 Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", sb.toString());
+                intent.putExtra("roomName", roomName);
                 intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
                 context.startActivity(intent);
             }

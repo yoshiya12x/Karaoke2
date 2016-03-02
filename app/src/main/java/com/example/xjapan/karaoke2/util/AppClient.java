@@ -23,7 +23,7 @@ import retrofit.http.Query;
 public class AppClient {
 
     private static final String END_POINT = "http://musicrecommender.herokuapp.com";
-    private static AppClient sInstance = new AppClient();
+    private static AppClient appClient = new AppClient();
     private AppService service;
 
     private AppClient() {
@@ -49,7 +49,7 @@ public class AppClient {
     }
 
     public static AppService getService() {
-        return sInstance.service;
+        return appClient.service;
     }
 
     public interface AppService {

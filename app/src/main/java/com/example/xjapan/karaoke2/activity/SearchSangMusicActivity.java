@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,12 +43,12 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         artistSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SpannableStringBuilder sb = (SpannableStringBuilder) artistEditText.getText();
-                if (!sb.toString().equals("")) {
+                String artistName = artistEditText.getText().toString();
+                if (!artistName.equals("")) {
                     Intent intent = new Intent(view.getContext(), RegisterActivity.class);
                     //artist=0,music=1
                     intent.putExtra("typeFlag", 0);
-                    intent.putExtra("postName", sb.toString());
+                    intent.putExtra("postName", artistName);
                     view.getContext().startActivity(intent);
                 }
             }
@@ -60,12 +59,12 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         musicSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SpannableStringBuilder sb = (SpannableStringBuilder) musicEditText.getText();
-                if (!sb.toString().equals("")) {
+                String musicName = musicEditText.getText().toString();
+                if (!musicName.equals("")) {
                     Intent intent = new Intent(view.getContext(), RegisterActivity.class);
                     //artist=0,music=1
                     intent.putExtra("typeFlag", 1);
-                    intent.putExtra("postName", sb.toString());
+                    intent.putExtra("postName", musicName);
                     view.getContext().startActivity(intent);
                 }
             }
