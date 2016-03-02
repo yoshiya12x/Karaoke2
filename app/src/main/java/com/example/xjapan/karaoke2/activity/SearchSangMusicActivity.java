@@ -12,6 +12,7 @@
 
 package com.example.xjapan.karaoke2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,11 +33,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_sang_music);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("歌った曲を登録");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        setToolbar();
 
         artistEditText = (EditText) findViewById(R.id.artistSangEditText);
         Button artistSearchButton = (Button) findViewById(R.id.searchArtistSangButton);
@@ -45,11 +42,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String artistName = artistEditText.getText().toString();
                 if (!artistName.isEmpty()) {
-                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                    //artist=0,music=1
-                    intent.putExtra("typeFlag", 0);
-                    intent.putExtra("postName", artistName);
-                    view.getContext().startActivity(intent);
+                    view.getContext().startActivity(createIntent(view.getContext(), 0, artistName));
                 }
             }
         });
@@ -61,11 +54,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String musicName = musicEditText.getText().toString();
                 if (!musicName.isEmpty()) {
-                    Intent intent = new Intent(view.getContext(), RegisterActivity.class);
-                    //artist=0,music=1
-                    intent.putExtra("typeFlag", 1);
-                    intent.putExtra("postName", musicName);
-                    view.getContext().startActivity(intent);
+                    view.getContext().startActivity(createIntent(view.getContext(), 1, musicName));
                 }
             }
         });
@@ -89,4 +78,23 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         return false;
     }
 
+    public void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("歌った曲を登録");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    public Intent createIntent(Context context, int typeFlag, String postName) {
+        if (!postName.isEmpty()) {
+            Intent intent = new Intent(context, RegisterActivity.class);
+            //artist=0,music=1
+            intent.putExtra("typeFlag", typeFlag);
+            intent.putExtra("postName", postName);
+            context.startActivity(intent);
+            return intent;
+        }
+        return null;
+    }
 }

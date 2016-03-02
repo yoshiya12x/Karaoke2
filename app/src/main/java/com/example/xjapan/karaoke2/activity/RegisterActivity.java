@@ -43,18 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         context = this;
-
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra("typeFlag", 2);
         String postName = intent.getStringExtra("postName");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = setToolBar();
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
         registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
@@ -85,13 +79,19 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
+    public Toolbar setToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        return toolbar;
+    }
+
     public void setSearchMusicTitleByArtistName(String postName) {
         AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
-                alertRegisterTextView.setText("登録する曲をタップしてください");
+                setView(musicTitleList, "登録する曲をタップしてください");
             }
 
             @Override
@@ -105,9 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
-                alertRegisterTextView.setText("登録する曲をタップしてください");
+                setView(musicTitleList, "登録する曲をタップしてください");
             }
 
             @Override
@@ -121,9 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
-                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+                setView(musicTitleList, "登録する曲をタップしてください  人気順に変換中...");
             }
 
             @Override
@@ -137,9 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
         AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
-                RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
-                registerMusicListView.setAdapter(registerMusicListAdapter);
-                alertRegisterTextView.setText("登録する曲をタップしてください  人気順に変換中...");
+                setView(musicTitleList, "登録する曲をタップしてください  人気順に変換中...");
             }
 
             @Override
@@ -147,5 +141,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("musicRecommendList_test", error.toString());
             }
         });
+    }
+
+    public void setView(List<MusicTitle> musicTitleList, String alertText) {
+        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
+        registerMusicListView.setAdapter(registerMusicListAdapter);
+        alertRegisterTextView.setText(alertText);
     }
 }

@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setToolbar();
+        context = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         UserDB userDB = new UserDB(this);
         userInfo = userDB.selectAll();
         //ユーザ登録情報が端末内に保存されていなければ初期画面に飛ばす
@@ -57,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intentInitialUseActivity = new Intent(getApplicationContext(), InitialUseActivity.class);
             startActivity(intentInitialUseActivity);
         }
-        context = this;
-        setSupportActionBar(toolbar);
         EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
         roomName = roomNameEditText.getText().toString();
         Button roomInButton = (Button) findViewById(R.id.roomInButton);
@@ -83,14 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     public void invokeRoomIn() {
         AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), roomName, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
-                Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", roomName);
-                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
-                context.startActivity(intent);
+                context.startActivity(createIntent());
             }
 
             @Override
@@ -104,10 +105,7 @@ public class MainActivity extends AppCompatActivity {
         AppClient.getService().createRoom(roomName, Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
-                Intent intent = new Intent(context, SuggestionActivity.class);
-                intent.putExtra("roomName", roomName);
-                intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
-                context.startActivity(intent);
+                context.startActivity(createIntent());
             }
 
             @Override
@@ -115,5 +113,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(context, "すでにそのルームはあります", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public Intent createIntent() {
+        Intent intent = new Intent(context, SuggestionActivity.class);
+        intent.putExtra("roomName", roomName);
+        intent.putExtra("account_id", Integer.parseInt(userInfo.get(0)));
+        return intent;
     }
 }

@@ -33,9 +33,7 @@ public class SuggestionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         accountId = intent.getIntExtra("account_id", 0);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(intent.getStringExtra("roomName"));
-        setSupportActionBar(toolbar);
+        setToolbar(intent.getStringExtra("roomName"));
 
         musicListView = (ListView) findViewById(R.id.suggetionMusicListView);
     }
@@ -72,6 +70,12 @@ public class SuggestionActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void setToolbar(String roomName) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(roomName);
+        setSupportActionBar(toolbar);
     }
 
     public void setMusicRecommend() {

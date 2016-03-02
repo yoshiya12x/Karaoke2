@@ -38,10 +38,7 @@ public class InitialUseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_use);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("登録画面");
-        setSupportActionBar(toolbar);
+        setToolbar();
         final EditText userNameEditText = (EditText) findViewById(R.id.userNameEditText);
         Button userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +63,12 @@ public class InitialUseActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void setToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("登録画面");
+        setSupportActionBar(toolbar);
     }
 
 }
