@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.xjapan.karaoke2.R;
@@ -16,33 +16,18 @@ import java.util.List;
 /**
  * Created by xjapan on 16/02/23.
  */
-public class SuggestionMusicListAdapter extends BaseAdapter {
+public class SuggestionMusicListAdapter extends ArrayAdapter<MusicRecommend> {
 
-    private List<MusicRecommend> musicRecommendList;
     private LayoutInflater inflater;
 
-    public SuggestionMusicListAdapter(Context context, List<MusicRecommend> musicRecommendList) {
-        this.musicRecommendList = musicRecommendList;
+    public SuggestionMusicListAdapter(Context context, int resourceId, List<MusicRecommend> musicRecommendList) {
+        super(context, resourceId, musicRecommendList);
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getCount() {
-        return musicRecommendList.size();
-    }
+    public View getView(int i, View view, ViewGroup viewGroup) {
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if (view == null) {
             view = inflater.inflate(R.layout.suggestion_music_list_item, viewGroup, false);
@@ -52,7 +37,7 @@ public class SuggestionMusicListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        MusicRecommend musicRecommend = musicRecommendList.get(i);
+        MusicRecommend musicRecommend = getItem(i);
         String musicName = musicRecommend.getTitle() + "(" + musicRecommend.getArtist() + ")";
         holder.musicNameTextView.setText(musicName);
         return view;

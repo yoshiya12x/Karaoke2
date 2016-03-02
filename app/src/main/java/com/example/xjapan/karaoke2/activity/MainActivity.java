@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private ArrayList<String> userInfo;
     private String roomName;
+    private EditText roomNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +59,22 @@ public class MainActivity extends AppCompatActivity {
             Intent intentInitialUseActivity = new Intent(getApplicationContext(), InitialUseActivity.class);
             startActivity(intentInitialUseActivity);
         }
-        EditText roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
-        roomName = roomNameEditText.getText().toString();
+        roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
         Button roomInButton = (Button) findViewById(R.id.roomInButton);
         roomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                roomName = roomNameEditText.getText().toString();
                 if (!roomName.isEmpty()) {
                     invokeRoomIn();
                 }
-
             }
         });
         Button roomCreateButton = (Button) findViewById(R.id.roomCreateButton);
         roomCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                roomName = roomNameEditText.getText().toString();
                 if (!roomName.isEmpty()) {
                     invokeCreateRoom();
                 }

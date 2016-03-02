@@ -144,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void setView(List<MusicTitle> musicTitleList, String alertText) {
-        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, musicTitleList);
+        RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, R.id.registerMusicListView, musicTitleList);
         registerMusicListView.setAdapter(registerMusicListAdapter);
         alertRegisterTextView.setText(alertText);
     }

@@ -82,7 +82,7 @@ public class SuggestionActivity extends AppCompatActivity {
         AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
             @Override
             public void success(List<MusicRecommend> musicRecommendList, Response response) {
-                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), musicRecommendList);
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), R.id.suggetionMusicListView, musicRecommendList);
                 musicListView.setAdapter(suggestionMusicListAdapter);
             }
 
