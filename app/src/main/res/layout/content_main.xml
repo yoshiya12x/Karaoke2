@@ -14,7 +14,6 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -31,7 +30,6 @@
         android:id="@+id/roomCreateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
@@ -42,7 +40,6 @@
         android:id="@+id/roomInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"

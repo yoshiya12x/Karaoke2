@@ -14,7 +14,6 @@
     tools:showIn="@layout/activity_initial_use">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -31,9 +30,6 @@
         android:id="@+id/userRegisterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textInputLayout"
-        android:layout_centerInParent="true"
         android:background="@drawable/button"
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
