@@ -78,7 +78,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         return false;
     }
 
-    public void setToolbar() {
+    private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("歌った曲を登録");
         setSupportActionBar(toolbar);

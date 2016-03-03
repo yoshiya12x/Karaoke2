@@ -71,13 +71,13 @@ public class SuggestionActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setToolbar(String roomName) {
+    private void setToolbar(String roomName) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(roomName);
         setSupportActionBar(toolbar);
     }
 
-    public void setMusicRecommend() {
+    private void setMusicRecommend() {
         AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
             @Override
             public void success(List<MusicRecommend> musicRecommendList, Response response) {
@@ -92,7 +92,7 @@ public class SuggestionActivity extends AppCompatActivity {
         });
     }
 
-    public void invokeRoomOut() {
+    private void invokeRoomOut() {
         AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {

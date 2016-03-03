@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-    public Toolbar setToolBar() {
+    private Toolbar setToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public void setSearchMusicTitleByArtistName(String postName) {
+    private void setSearchMusicTitleByArtistName(String postName) {
         AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleByMusicName(String postName) {
+    private void setSearchMusicTitleByMusicName(String postName) {
         AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
@@ -121,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleFastByArtistName(String postName) {
+    private void setSearchMusicTitleFastByArtistName(String postName) {
         AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setSearchMusicTitleFastByMusicName(String postName) {
+    private void setSearchMusicTitleFastByMusicName(String postName) {
         AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
             @Override
             public void success(List<MusicTitle> musicTitleList, Response response) {
@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void setView(List<MusicTitle> musicTitleList, String alertText) {
+    private void setView(List<MusicTitle> musicTitleList, String alertText) {
         RegisterMusicListAdapter registerMusicListAdapter = new RegisterMusicListAdapter(context, R.id.registerMusicListView, musicTitleList);
         registerMusicListView.setAdapter(registerMusicListAdapter);
         alertRegisterTextView.setText(alertText);
@@ -162,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
         return intent;
     }
 
-    public AdapterView.OnItemClickListener createOnItemClickListener() {
+    private AdapterView.OnItemClickListener createOnItemClickListener() {
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setToolbar() {
+    private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    public void invokeRoomIn() {
+    private void invokeRoomIn() {
         AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), roomName, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void invokeCreateRoom() {
+    private void invokeCreateRoom() {
         AppClient.getService().createRoom(roomName, Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
