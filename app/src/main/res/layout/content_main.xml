@@ -31,8 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
-        android:paddingLeft="@dimen/search_button_margin"
-        android:paddingRight="@dimen/search_button_margin"
         android:text="ルーム作成"
         android:textColor="@android:color/white" />
 
@@ -41,8 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
-        android:paddingLeft="@dimen/search_button_margin"
-        android:paddingRight="@dimen/search_button_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="ルーム入室"
         android:textColor="@android:color/white" />
 

@@ -31,8 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
-        android:paddingLeft="@dimen/search_button_margin"
-        android:paddingRight="@dimen/search_button_margin"
         android:text="登録"
         android:textColor="@android:color/white" />
 
