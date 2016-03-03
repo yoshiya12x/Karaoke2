@@ -34,7 +34,7 @@
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
         android:text="ルーム作成"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/roomInButton"
@@ -44,7 +44,7 @@
         android:paddingLeft="@dimen/search_button_margin"
         android:paddingRight="@dimen/search_button_margin"
         android:text="ルーム入室"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@android:color/white" />
 
     <!--view表示時にeditTextからフォーカスを外すため-->
     <TextView
