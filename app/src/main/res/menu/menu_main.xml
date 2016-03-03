@@ -2,11 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.MainActivity">
-    <!--<item-->
-    <!--android:id="@+id/action_want_music"-->
-    <!--android:orderInCategory="100"-->
-    <!--android:title="歌いたい曲を登録"-->
-    <!--app:showAsAction="never" />-->
     <item
         android:id="@+id/action_sang_music"
         android:orderInCategory="100"
@@ -20,7 +15,7 @@
 
     <item
         android:id="@+id/action_reload"
-        android:icon="@drawable/reload"
+        android:icon="@mipmap/ic_refresh_white_24dp"
         android:orderInCategory="102"
         android:title="reload"
         app:showAsAction="ifRoom" />

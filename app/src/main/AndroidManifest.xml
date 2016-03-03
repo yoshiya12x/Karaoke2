@@ -36,7 +36,7 @@
         <activity
             android:name=".activity.InitialUseActivity"
             android:label="@string/title_activity_initial_use"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
