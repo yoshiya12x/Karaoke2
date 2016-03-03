@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.xjapan.karaoke2.sqlite.SQLiteHelper;
-
 import java.util.ArrayList;
 
 /**
@@ -17,7 +15,7 @@ public class UserDB {
     private SQLiteHelper helper;
 
     public UserDB(Context context) {
-        helper = new SQLiteHelper(context);
+        helper = new SQLiteHelper(context.getApplicationContext());
     }
 
     public ArrayList<String> selectAll() {
