@@ -86,10 +86,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void invokeRoomIn() {
-        AppClient.getService().roomIn(Integer.parseInt(userInfo.get(0)), roomName, new Callback<UserInfo>() {
+        final int userId = Integer.parseInt(userInfo.get(0));
+        AppClient.getService().roomIn(userId, roomName, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
-                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, Integer.parseInt(userInfo.get(0))));
+                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
             }
 
             @Override
@@ -100,10 +101,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void invokeCreateRoom() {
-        AppClient.getService().createRoom(roomName, Integer.parseInt(userInfo.get(0)), new Callback<UserInfo>() {
+        final int userId = Integer.parseInt(userInfo.get(0));
+        AppClient.getService().createRoom(roomName, userId, new Callback<UserInfo>() {
             @Override
             public void success(UserInfo successUserInfo, Response response) {
-                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, Integer.parseInt(userInfo.get(0))));
+                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
             }
 
             @Override

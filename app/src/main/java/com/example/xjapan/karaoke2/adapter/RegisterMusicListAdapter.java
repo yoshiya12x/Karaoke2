@@ -36,7 +36,8 @@ public class RegisterMusicListAdapter extends ArrayAdapter<MusicTitle> {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        String musicName = getItem(i).getTitle() + "(" + getItem(i).getArtist() + ")";
+        MusicTitle musicTitle = getItem(i);
+        String musicName = musicTitle.getTitle() + "(" + musicTitle.getArtist() + ")";
         holder.musicNameTextView.setText(musicName);
         return view;
     }
