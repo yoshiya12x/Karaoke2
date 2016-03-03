@@ -18,14 +18,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.RegisterMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicTitle;
+import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.sqlite.UserDB;
 import com.example.xjapan.karaoke2.util.AppClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -49,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = setToolBar();
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
         registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
-
         if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
             setSearchMusicTitleFastByArtistName(postName);
@@ -59,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
             setSearchMusicTitleFastByMusicName(postName);
             setSearchMusicTitleByMusicName(postName);
         }
+        registerMusicListView.setOnItemClickListener(createOnItemClickListener());
     }
 
     @Override
@@ -155,4 +161,29 @@ public class RegisterActivity extends AppCompatActivity {
         intent.putExtra("postName", postName);
         return intent;
     }
+
+    public AdapterView.OnItemClickListener createOnItemClickListener() {
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ListView listView = (ListView) adapterView;
+                MusicTitle musicTitle = (MusicTitle) listView.getItemAtPosition(i);
+                UserDB userDB = new UserDB(RegisterActivity.this);
+                ArrayList<String> userInfo = userDB.selectAll();
+                AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitle.getMusicId(), new Callback<UserInfo>() {
+                    @Override
+                    public void success(UserInfo userInfo, Response response) {
+                        Toast.makeText(RegisterActivity.this, "登録しました", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("musicRecommendList_test", error.toString());
+                    }
+                });
+            }
+        };
+        return onItemClickListener;
+    }
+
 }
