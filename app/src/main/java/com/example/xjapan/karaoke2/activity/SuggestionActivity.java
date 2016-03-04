@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.SuggestionMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicRecommend;
+import com.example.xjapan.karaoke2.model.UserInfo;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
@@ -97,9 +98,9 @@ public class SuggestionActivity extends AppCompatActivity {
     }
 
     private void invokeRoomOut() {
-        AppClient.getService().roomOut(accountId, new Callback() {
+        AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
             @Override
-            public void success(Object o, Response response) {
+            public void success(UserInfo userInfo, Response response) {
                 SuggestionActivity.this.startActivity(MainActivity.createIntent(SuggestionActivity.this));
             }
 

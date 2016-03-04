@@ -106,17 +106,17 @@ public class AppClient {
         void roomIn(
                 @Query("account_id") int account_id,
                 @Query("room_name") String room_name,
-                Callback callback);
+                Callback<UserInfo> callback);
 
         @GET("/room/out")
         void roomOut(
                 @Query("account_id") int account_id,
-                Callback callback);
+                Callback<UserInfo> callback);
 
         @GET("/create_room")
         void createRoom(
                 @Query("room_name") String room_name,
                 @Query("user_id") int user_id,
-                Callback callback);
+                Callback<UserInfo> callback);
     }
 }
