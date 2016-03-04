@@ -82,12 +82,12 @@ public class SearchSangMusicActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_song_register);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     public static Intent createIntent(Context context) {
-        Intent intent = new Intent(context.getApplicationContext(), SearchSangMusicActivity.class);
-        return intent;
+        return new Intent(context.getApplicationContext(), SearchSangMusicActivity.class);
     }
 }

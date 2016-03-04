@@ -92,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Toolbar setToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         return toolbar;
@@ -167,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private AdapterView.OnItemClickListener createOnItemClickListener() {
-        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 ListView listView = (ListView) adapterView;
@@ -187,7 +188,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
             }
         };
-        return onItemClickListener;
     }
 
 }

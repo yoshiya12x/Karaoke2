@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static Intent createIntent(Context context) {
-        Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
-        return intent;
+        return new Intent(context.getApplicationContext(), MainActivity.class);
     }
 }
