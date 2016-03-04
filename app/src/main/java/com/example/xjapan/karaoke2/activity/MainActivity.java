@@ -28,7 +28,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.model.UserInfo;
 import com.example.xjapan.karaoke2.sqlite.UserDB;
 import com.example.xjapan.karaoke2.util.AppClient;
 
@@ -87,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void invokeRoomIn() {
         final int userId = Integer.parseInt(userInfo.get(0));
-        AppClient.getService().roomIn(userId, roomName, new Callback<UserInfo>() {
+        AppClient.getService().roomIn(userId, roomName, new Callback<Object>() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
+            public void success(Object o, Response response) {
                 MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
             }
 
@@ -102,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void invokeCreateRoom() {
         final int userId = Integer.parseInt(userInfo.get(0));
-        AppClient.getService().createRoom(roomName, userId, new Callback<UserInfo>() {
+        AppClient.getService().createRoom(roomName, userId, new Callback<Object>() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
+            public void success(Object o, Response response) {
                 MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
             }
 

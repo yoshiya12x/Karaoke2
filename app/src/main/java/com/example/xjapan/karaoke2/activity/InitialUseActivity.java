@@ -25,15 +25,16 @@ import android.widget.EditText;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.model.UserInfo;
 import com.example.xjapan.karaoke2.sqlite.UserDB;
-import com.example.xjapan.karaoke2.util.AppClient;
+import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
+import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
+import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.userInfo.GetUserInfoUseCase;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class InitialUseActivity extends AppCompatActivity {
 
-    private String userName;
+    private static final String TAG = InitialUseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +46,20 @@ public class InitialUseActivity extends AppCompatActivity {
         userRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userName = userNameEditText.getText().toString();
+                final String userName = userNameEditText.getText().toString();
                 if (!userName.isEmpty()) {
-                    AppClient.getService().getUserInfo(userName, new Callback<UserInfo>() {
+                    GetUserInfoUseCase getUserInfoUseCase = new GetUserInfoUseCase();
+                    getUserInfoUseCase.apply(userName, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
                         @Override
-                        public void success(UserInfo userInfo, Response response) {
+                        public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
                             UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(userInfo.getAccountId(), userName);
+                            userDB.insertAll(success.getResult().getAccountId(), userName);
                             InitialUseActivity.this.startActivity(MainActivity.createIntent(InitialUseActivity.this));
                         }
-
+                    }, new FailureCallback<RetrofitError>() {
                         @Override
-                        public void failure(RetrofitError error) {
-                            Log.d("getUserInfo", error.toString());
+                        public void onFailure(RetrofitError error) {
+                            Log.e(TAG, "UseCase : " + GetUserInfoUseCase.class.getSimpleName(), error);
                         }
                     });
                 }
@@ -72,8 +74,7 @@ public class InitialUseActivity extends AppCompatActivity {
     }
 
     public static Intent createIntent(Context context) {
-        Intent intent = new Intent(context.getApplicationContext(), InitialUseActivity.class);
-        return intent;
+        return new Intent(context.getApplicationContext(), InitialUseActivity.class);
     }
 
 }

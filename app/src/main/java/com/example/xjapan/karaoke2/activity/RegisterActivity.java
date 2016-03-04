@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new FailureCallback<RetrofitError>() {
             @Override
             public void onFailure(RetrofitError error) {
-                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+                Log.e(TAG, "UseCase : " + SearchMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new FailureCallback<RetrofitError>() {
             @Override
             public void onFailure(RetrofitError error) {
-                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+                Log.e(TAG, "UseCase : " + SearchMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new FailureCallback<RetrofitError>() {
             @Override
             public void onFailure(RetrofitError error) {
-                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+                Log.e(TAG, "UseCase : " + SearchMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new FailureCallback<RetrofitError>() {
             @Override
             public void onFailure(RetrofitError error) {
-                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+                Log.e(TAG, "UseCase : " + SearchMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
