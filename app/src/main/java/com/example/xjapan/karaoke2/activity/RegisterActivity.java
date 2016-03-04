@@ -33,13 +33,11 @@ import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
 import com.example.xjapan.karaoke2.usecase.registration.RegisterMusicUseCase;
-import com.example.xjapan.karaoke2.util.AppClient;
+import com.example.xjapan.karaoke2.usecase.search.SearchMusicUseCase;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -47,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ListView registerMusicListView;
     private Context context;
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    private SearchMusicUseCase searchMusicUseCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +55,18 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int typeFlag = intent.getIntExtra("typeFlag", 2);
         String postName = intent.getStringExtra("postName");
+        searchMusicUseCase = new SearchMusicUseCase(postName);
         Toolbar toolbar = setToolBar();
         alertRegisterTextView = (TextView) findViewById(R.id.alertRegister);
         registerMusicListView = (ListView) findViewById(R.id.registerMusicListView);
         if (typeFlag == 0) {
             toolbar.setTitle("アーティスト名(" + postName + ")");
-            setSearchMusicTitleFastByArtistName(postName);
-            setSearchMusicTitleByArtistName(postName);
+            setSearchMusicTitleFastByArtistName();
+            setSearchMusicTitleByArtistName();
         } else if (typeFlag == 1) {
             toolbar.setTitle("曲名(" + postName + ")");
-            setSearchMusicTitleFastByMusicName(postName);
-            setSearchMusicTitleByMusicName(postName);
+            setSearchMusicTitleFastByMusicName();
+            setSearchMusicTitleByMusicName();
         }
         registerMusicListView.setOnItemClickListener(createOnItemClickListener());
     }
@@ -97,58 +97,58 @@ public class RegisterActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    private void setSearchMusicTitleByArtistName(String postName) {
-        AppClient.getService().getSearchMusicTitleByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+    private void setSearchMusicTitleByArtistName() {
+        searchMusicUseCase.applySearchMusicTitleByArtistName(new SuccessCallback<RetrofitSuccessEvent<List<MusicTitle>>>() {
             @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                setView(musicTitleList, R.string.text_tap_song);
+            public void onSuccess(RetrofitSuccessEvent<List<MusicTitle>> success) {
+                setView(success.getResult(), R.string.text_tap_song);
             }
-
+        }, new FailureCallback<RetrofitError>() {
             @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
-            }
-        });
-    }
-
-    private void setSearchMusicTitleByMusicName(String postName) {
-        AppClient.getService().getSearchMusicTitleByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
-            @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                setView(musicTitleList, R.string.text_tap_song);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
+            public void onFailure(RetrofitError error) {
+                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
 
-    private void setSearchMusicTitleFastByArtistName(String postName) {
-        AppClient.getService().getSearchMusicTitleFastByArtistName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+    private void setSearchMusicTitleByMusicName() {
+        searchMusicUseCase.applySearchMusicTitleByMusicName(new SuccessCallback<RetrofitSuccessEvent<List<MusicTitle>>>() {
             @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                setView(musicTitleList, R.string.text_tap_song_changing);
+            public void onSuccess(RetrofitSuccessEvent<List<MusicTitle>> success) {
+                setView(success.getResult(), R.string.text_tap_song);
             }
-
+        }, new FailureCallback<RetrofitError>() {
             @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
+            public void onFailure(RetrofitError error) {
+                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
 
-    private void setSearchMusicTitleFastByMusicName(String postName) {
-        AppClient.getService().getSearchMusicTitleFastByMusicName(postName, 30, 0, new Callback<List<MusicTitle>>() {
+    private void setSearchMusicTitleFastByArtistName() {
+        searchMusicUseCase.applySearchMusicTitleFasByArtistName(new SuccessCallback<RetrofitSuccessEvent<List<MusicTitle>>>() {
             @Override
-            public void success(List<MusicTitle> musicTitleList, Response response) {
-                setView(musicTitleList, R.string.text_tap_song_changing);
+            public void onSuccess(RetrofitSuccessEvent<List<MusicTitle>> success) {
+                setView(success.getResult(), R.string.text_tap_song_changing);
             }
-
+        }, new FailureCallback<RetrofitError>() {
             @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
+            public void onFailure(RetrofitError error) {
+                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
+            }
+        });
+    }
+
+    private void setSearchMusicTitleFastByMusicName() {
+        searchMusicUseCase.applySearchMusicTitleFasByMusicName(new SuccessCallback<RetrofitSuccessEvent<List<MusicTitle>>>() {
+            @Override
+            public void onSuccess(RetrofitSuccessEvent<List<MusicTitle>> success) {
+                setView(success.getResult(), R.string.text_tap_song_changing);
+            }
+        }, new FailureCallback<RetrofitError>() {
+            @Override
+            public void onFailure(RetrofitError error) {
+                Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
             }
         });
     }
