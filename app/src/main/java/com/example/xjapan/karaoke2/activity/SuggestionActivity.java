@@ -13,6 +13,10 @@ import android.widget.ListView;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.SuggestionMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicRecommend;
+import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
+import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
+import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.recommend.RecommendMusicUseCase;
 import com.example.xjapan.karaoke2.util.AppClient;
 
 import java.util.List;
@@ -77,16 +81,17 @@ public class SuggestionActivity extends AppCompatActivity {
     }
 
     private void setMusicRecommend() {
-        AppClient.getService().getMusicRecommend(accountId, new Callback<List<MusicRecommend>>() {
+        RecommendMusicUseCase recommendMusicUseCase = new RecommendMusicUseCase();
+        recommendMusicUseCase.apply(accountId, new SuccessCallback<RetrofitSuccessEvent<List<MusicRecommend>>>() {
             @Override
-            public void success(List<MusicRecommend> musicRecommendList, Response response) {
-                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), R.id.suggetionMusicListView, musicRecommendList);
+            public void onSuccess(RetrofitSuccessEvent<List<MusicRecommend>> success) {
+                SuggestionMusicListAdapter suggestionMusicListAdapter = new SuggestionMusicListAdapter(getApplicationContext(), R.id.suggetionMusicListView, success.getResult());
                 musicListView.setAdapter(suggestionMusicListAdapter);
             }
-
+        }, new FailureCallback<RetrofitError>() {
             @Override
-            public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
+            public void onFailure(RetrofitError error) {
+                Log.e(TAG, "UseCase : " + SuggestionActivity.class.getSimpleName(), error);
             }
         });
     }
