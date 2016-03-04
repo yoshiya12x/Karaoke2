@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.model.MusicRecommend;
-import com.example.xjapan.karaoke2.model.ViewHolder;
 
 import java.util.List;
 
@@ -41,5 +40,9 @@ public class SuggestionMusicListAdapter extends ArrayAdapter<MusicRecommend> {
         String musicName = musicRecommend.getTitle() + "(" + musicRecommend.getArtist() + ")";
         holder.musicNameTextView.setText(musicName);
         return view;
+    }
+
+    private class ViewHolder {
+        public TextView musicNameTextView;
     }
 }
