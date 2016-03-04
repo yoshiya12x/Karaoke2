@@ -111,7 +111,7 @@ public class AppClient {
         @GET("/room/out")
         void roomOut(
                 @Query("account_id") int account_id,
-                Callback<UserInfo> callback);
+                Callback callback);
 
         @GET("/create_room")
         void createRoom(

@@ -13,7 +13,6 @@ import android.widget.ListView;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.SuggestionMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicRecommend;
-import com.example.xjapan.karaoke2.model.UserInfo;
 import com.example.xjapan.karaoke2.util.AppClient;
 
 import java.util.List;
@@ -26,6 +25,7 @@ public class SuggestionActivity extends AppCompatActivity {
 
     private ListView musicListView;
     private int accountId;
+    private static final String TAG = SuggestionActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,6 @@ public class SuggestionActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_logout) {
             invokeRoomOut();
-            SuggestionActivity.this.startActivity(MainActivity.createIntent(SuggestionActivity.this));
             return true;
         } else if (id == android.R.id.home) {
             finish();
@@ -93,15 +92,15 @@ public class SuggestionActivity extends AppCompatActivity {
     }
 
     private void invokeRoomOut() {
-        AppClient.getService().roomOut(accountId, new Callback<UserInfo>() {
+        AppClient.getService().roomOut(accountId, new Callback() {
             @Override
-            public void success(UserInfo successUserInfo, Response response) {
-
+            public void success(Object o, Response response) {
+                SuggestionActivity.this.startActivity(MainActivity.createIntent(SuggestionActivity.this));
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("musicRecommendList_test", error.toString());
+                Log.e(TAG, "UseCase : Nothing", error);
             }
         });
     }
