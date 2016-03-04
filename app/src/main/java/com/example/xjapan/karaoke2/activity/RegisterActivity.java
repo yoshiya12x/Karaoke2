@@ -14,6 +14,7 @@ package com.example.xjapan.karaoke2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,16 +23,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.RegisterMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicTitle;
 import com.example.xjapan.karaoke2.model.UserInfo;
 import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
+import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
+import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
+import com.example.xjapan.karaoke2.usecase.registration.RegisterMusicUseCase;
 import com.example.xjapan.karaoke2.util.AppClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -43,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView alertRegisterTextView;
     private ListView registerMusicListView;
     private Context context;
+    private static final String TAG = RegisterActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,20 +169,20 @@ public class RegisterActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener createOnItemClickListener() {
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 ListView listView = (ListView) adapterView;
                 MusicTitle musicTitle = (MusicTitle) listView.getItemAtPosition(i);
                 UserDB userDB = new UserDB(RegisterActivity.this);
-                ArrayList<String> userInfo = userDB.selectAll();
-                AppClient.getService().register_sung_music(Integer.parseInt(userInfo.get(0)), musicTitle.getMusicId(), new Callback<UserInfo>() {
+                RegisterMusicUseCase useCase = new RegisterMusicUseCase(userDB);
+                useCase.apply(musicTitle, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
                     @Override
-                    public void success(UserInfo userInfo, Response response) {
-                        Toast.makeText(RegisterActivity.this, R.string.toast_register, Toast.LENGTH_LONG).show();
+                    public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
+                        Snackbar.make(view, R.string.toast_register, Snackbar.LENGTH_INDEFINITE).show();
                     }
-
+                }, new FailureCallback<RetrofitError>() {
                     @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("musicRecommendList_test", error.toString());
+                    public void onFailure(RetrofitError error) {
+                        Log.e(TAG, "UseCase : " + RegisterMusicUseCase.class.getSimpleName(), error);
                     }
                 });
             }
