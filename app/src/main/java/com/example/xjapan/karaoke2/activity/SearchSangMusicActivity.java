@@ -80,7 +80,7 @@ public class SearchSangMusicActivity extends AppCompatActivity {
 
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("歌った曲を登録");
+        toolbar.setTitle(R.string.title_song_register);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

@@ -67,7 +67,7 @@ public class InitialUseActivity extends AppCompatActivity {
 
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("登録画面");
+        toolbar.setTitle(R.string.title_register);
         setSupportActionBar(toolbar);
     }
 

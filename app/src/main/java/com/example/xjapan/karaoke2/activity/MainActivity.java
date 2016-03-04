@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(MainActivity.this, "そのルームはありません", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.toast_no_room, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(MainActivity.this, "すでにそのルームはあります", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.toast_already_room, Toast.LENGTH_LONG).show();
             }
         });
     }

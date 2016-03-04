@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginLeft="@dimen/activity_vertical_margin"
     android:layout_marginRight="@dimen/activity_vertical_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.RegisterActivity"
     tools:showIn="@layout/activity_register">
@@ -15,7 +15,7 @@
         android:id="@+id/alertRegister"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="登録する曲をタップしてください  検索中..." />
+        android:text="@string/text_tap_song_searching" />
 
     <ListView
         android:id="@+id/registerMusicListView"
