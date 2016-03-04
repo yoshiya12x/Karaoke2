@@ -5,18 +5,18 @@
     <item
         android:id="@+id/action_sang_music"
         android:orderInCategory="100"
-        android:title="歌った曲を登録"
+        android:title="@string/menu_register_song"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:title="退室"
+        android:title="@string/menu_leave_room"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_reload"
         android:icon="@mipmap/ic_refresh_white_24dp"
         android:orderInCategory="102"
-        android:title="reload"
+        android:title="@string/menu_reload"
         app:showAsAction="ifRoom" />
 </menu>
