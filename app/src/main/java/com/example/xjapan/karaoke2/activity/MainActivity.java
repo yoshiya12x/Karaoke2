@@ -28,11 +28,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.model.UserInfo;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.db.dao.UserDAO;
+import com.example.xjapan.karaoke2.model.User;
 import com.example.xjapan.karaoke2.util.AppClient;
-
-import java.util.ArrayList;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -40,9 +38,10 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> userInfo;
     private String roomName;
     private EditText roomNameEditText;
+    private final UserDAO dao = UserDAO.get();
+    private final User user = dao.findFirst();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setToolbar();
 
-        UserDB userDB = new UserDB(this);
-        userInfo = userDB.selectAll();
         //ユーザ登録情報が端末内に保存されていなければ初期画面に飛ばす
-        if (userInfo.size() == 0) {
+        if (user == null) {
             MainActivity.this.startActivity(InitialUseActivity.createIntent(MainActivity.this));
         }
         roomNameEditText = (EditText) findViewById(R.id.roomNameEditText);
@@ -86,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void invokeRoomIn() {
-        final int userId = Integer.parseInt(userInfo.get(0));
-        AppClient.getService().roomIn(userId, roomName, new Callback<UserInfo>() {
+        AppClient.getService().roomIn(user.accountId, roomName, new Callback<User>() {
             @Override
-            public void success(UserInfo userInfo, Response response) {
-                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
+            public void success(User resUser, Response response) {
+                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, user.accountId));
             }
 
             @Override
@@ -101,11 +97,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void invokeCreateRoom() {
-        final int userId = Integer.parseInt(userInfo.get(0));
-        AppClient.getService().createRoom(roomName, userId, new Callback<UserInfo>() {
+        AppClient.getService().createRoom(roomName, user.accountId, new Callback<User>() {
             @Override
-            public void success(UserInfo userInfo, Response response) {
-                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, userId));
+            public void success(User resUser, Response response) {
+                MainActivity.this.startActivity(SuggestionActivity.createIntent(MainActivity.this, roomName, user.accountId));
             }
 
             @Override

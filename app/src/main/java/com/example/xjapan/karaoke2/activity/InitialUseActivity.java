@@ -23,8 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.xjapan.karaoke2.R;
-import com.example.xjapan.karaoke2.model.UserInfo;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.model.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
@@ -49,11 +48,9 @@ public class InitialUseActivity extends AppCompatActivity {
                 final String userName = userNameEditText.getText().toString();
                 if (!userName.isEmpty()) {
                     GetUserInfoUseCase getUserInfoUseCase = new GetUserInfoUseCase();
-                    getUserInfoUseCase.apply(userName, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
+                    getUserInfoUseCase.apply(userName, new SuccessCallback<RetrofitSuccessEvent<User>>() {
                         @Override
-                        public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
-                            UserDB userDB = new UserDB(getApplicationContext());
-                            userDB.insertAll(success.getResult().getAccountId(), userName);
+                        public void onSuccess(RetrofitSuccessEvent<User> success) {
                             InitialUseActivity.this.startActivity(MainActivity.createIntent(InitialUseActivity.this));
                         }
                     }, new FailureCallback<RetrofitError>() {

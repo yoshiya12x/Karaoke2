@@ -1,6 +1,7 @@
 package com.example.xjapan.karaoke2.usecase.userInfo;
 
-import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.db.dao.UserDAO;
+import com.example.xjapan.karaoke2.model.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
@@ -15,17 +16,24 @@ import retrofit.client.Response;
  */
 public class GetUserInfoUseCase {
 
+    private final UserDAO dao = UserDAO.get();
+
     public GetUserInfoUseCase() {
     }
 
-    public void apply(String userName, final SuccessCallback<RetrofitSuccessEvent<UserInfo>> successCallback, final FailureCallback<RetrofitError> failureCallback) {
+    public void apply(String userName, final SuccessCallback<RetrofitSuccessEvent<User>> successCallback, final FailureCallback<RetrofitError> failureCallback) {
         assert successCallback != null;
         assert failureCallback != null;
 
-        AppClient.getService().getUserInfo(userName, new Callback<UserInfo>() {
+        AppClient.getService().getUserInfo(userName, new Callback<User>() {
             @Override
-            public void success(UserInfo userInfo, Response response) {
-                successCallback.onSuccess(new RetrofitSuccessEvent<>(userInfo, response));
+            public void success(User user, Response response) {
+                long id = dao.insert(user);
+                if (id > 0) {
+                    successCallback.onSuccess(new RetrofitSuccessEvent<>(user, response));
+                } else {
+
+                }
             }
 
             @Override

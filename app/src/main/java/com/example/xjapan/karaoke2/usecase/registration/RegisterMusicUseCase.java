@@ -1,8 +1,8 @@
 package com.example.xjapan.karaoke2.usecase.registration;
 
+import com.example.xjapan.karaoke2.db.dao.UserDAO;
 import com.example.xjapan.karaoke2.model.MusicTitle;
-import com.example.xjapan.karaoke2.model.UserInfo;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.model.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
@@ -17,21 +17,20 @@ import retrofit.client.Response;
  */
 public class RegisterMusicUseCase {
 
-    private final UserDB dao;
+    private final UserDAO dao = UserDAO.get();
 
-    public RegisterMusicUseCase(UserDB dao){
-        this.dao = dao;
+    public RegisterMusicUseCase() {
     }
 
-    public void apply(MusicTitle musicTitle, final SuccessCallback<RetrofitSuccessEvent<UserInfo>> successCallback, final FailureCallback<RetrofitError> failureCallback){
+    public void apply(MusicTitle musicTitle, final SuccessCallback<RetrofitSuccessEvent<User>> successCallback, final FailureCallback<RetrofitError> failureCallback) {
         assert successCallback != null;
         assert failureCallback != null;
 
-        int userId = Integer.parseInt(dao.selectAll().get(0));
-        AppClient.getService().register_sung_music(userId, musicTitle.getMusicId(), new Callback<UserInfo>() {
+        User user = dao.findFirst();
+        AppClient.getService().register_sung_music(user.accountId, musicTitle.getMusicId(), new Callback<User>() {
             @Override
-            public void success(UserInfo userInfo, Response response) {
-                successCallback.onSuccess(new RetrofitSuccessEvent<>(userInfo, response));
+            public void success(User user, Response response) {
+                successCallback.onSuccess(new RetrofitSuccessEvent<>(user, response));
             }
 
             @Override

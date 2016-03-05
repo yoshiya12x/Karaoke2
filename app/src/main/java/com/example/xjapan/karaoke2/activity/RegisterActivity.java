@@ -27,8 +27,7 @@ import android.widget.TextView;
 import com.example.xjapan.karaoke2.R;
 import com.example.xjapan.karaoke2.adapter.RegisterMusicListAdapter;
 import com.example.xjapan.karaoke2.model.MusicTitle;
-import com.example.xjapan.karaoke2.model.UserInfo;
-import com.example.xjapan.karaoke2.sqlite.UserDB;
+import com.example.xjapan.karaoke2.model.User;
 import com.example.xjapan.karaoke2.usecase.common.FailureCallback;
 import com.example.xjapan.karaoke2.usecase.common.RetrofitSuccessEvent;
 import com.example.xjapan.karaoke2.usecase.common.SuccessCallback;
@@ -173,11 +172,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 ListView listView = (ListView) adapterView;
                 MusicTitle musicTitle = (MusicTitle) listView.getItemAtPosition(i);
-                UserDB userDB = new UserDB(RegisterActivity.this);
-                RegisterMusicUseCase useCase = new RegisterMusicUseCase(userDB);
-                useCase.apply(musicTitle, new SuccessCallback<RetrofitSuccessEvent<UserInfo>>() {
+                RegisterMusicUseCase useCase = new RegisterMusicUseCase();
+                useCase.apply(musicTitle, new SuccessCallback<RetrofitSuccessEvent<User>>() {
                     @Override
-                    public void onSuccess(RetrofitSuccessEvent<UserInfo> success) {
+                    public void onSuccess(RetrofitSuccessEvent<User> success) {
                         Snackbar.make(view, R.string.toast_register, Snackbar.LENGTH_INDEFINITE).show();
                     }
                 }, new FailureCallback<RetrofitError>() {

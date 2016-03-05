@@ -2,7 +2,7 @@ package com.example.xjapan.karaoke2.util;
 
 import com.example.xjapan.karaoke2.model.MusicRecommend;
 import com.example.xjapan.karaoke2.model.MusicTitle;
-import com.example.xjapan.karaoke2.model.UserInfo;
+import com.example.xjapan.karaoke2.model.User;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -94,29 +94,29 @@ public class AppClient {
         @GET("/account")
         void getUserInfo(
                 @Query("name") String name,
-                Callback<UserInfo> callback);
+                Callback<User> callback);
 
         @GET("/sung_music")
         void register_sung_music(
                 @Query("account_id") int account_id,
                 @Query("music_id") int music_id,
-                Callback<UserInfo> callback);
+                Callback<User> callback);
 
         @GET("/room/in")
         void roomIn(
                 @Query("account_id") int account_id,
                 @Query("room_name") String room_name,
-                Callback<UserInfo> callback);
+                Callback<User> callback);
 
         @GET("/room/out")
         void roomOut(
                 @Query("account_id") int account_id,
-                Callback<UserInfo> callback);
+                Callback<User> callback);
 
         @GET("/create_room")
         void createRoom(
                 @Query("room_name") String room_name,
                 @Query("user_id") int user_id,
-                Callback<UserInfo> callback);
+                Callback<User> callback);
     }
 }
