@@ -40,6 +40,10 @@ public class InitialUseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_use);
         setToolbar();
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
+
         final EditText userNameEditText = (EditText) findViewById(R.id.userNameEditText);
         Button userRegisterButton = (Button) findViewById(R.id.userRegisterButton);
         userRegisterButton.setOnClickListener(new View.OnClickListener() {

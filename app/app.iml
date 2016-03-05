@@ -101,5 +101,6 @@
     <orderEntry type="library" exported="" name="support-v4-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="orma-migration-2.0.6" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
   </component>
 </module>
